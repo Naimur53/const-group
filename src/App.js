@@ -1,56 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './Components/Pages/Login/Login'
+import PrivateRoute from './Components/Pages/PrivateRoute/PrivateRoute';
+import Home from './Components/Pages/Home/Home';
+import useFirebase from './hooks/useFirebase';
+import TopBar from './Components/SmallComponents/TopBar/TopBar';
+import SignUp from './Components/Pages/SignUp/SignUp';
+import Help from './Components/Pages/Help/Help';
+import Announcement from './Components/Pages/Announcement/Announcement';
+import ShowOff from './Components/Pages/ShowOff/ShowOff';
 function App() {
+  const { handleSignOut } = useFirebase();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <BrowserRouter>
+        <TopBar></TopBar>
+        <Routes>
+          <Route path='/' element={<PrivateRoute><Home></Home></PrivateRoute>}>
+            <Route path='/' element={<PrivateRoute><Help></Help></PrivateRoute>}> </Route>
+            <Route path='/help' element={<PrivateRoute><Help></Help></PrivateRoute>}></Route>
+            <Route path='/showoff' element={<PrivateRoute><ShowOff></ShowOff></PrivateRoute>}> </Route>
+            <Route path='/announcement' element={<PrivateRoute><Announcement></Announcement></PrivateRoute>}> </Route>
+          </Route>
+          <Route path='/login' element={<Login></Login>}></Route>
+          <Route path='/signup' element={<SignUp></SignUp>}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
