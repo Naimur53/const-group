@@ -14,7 +14,9 @@ const Announcement = () => {
 
     return (
         <div className='h-screen px-2 pb-36 overflow-hidden overflow-y-scroll'>
-            <Post></Post>
+            {
+                data.admin && <Post></Post>
+            }
             <Grid container spacing={2}>
 
                 {
