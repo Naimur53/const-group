@@ -10,7 +10,6 @@ const PrivateRoute = ({ children }) => {
     let location = useLocation();
 
     if (data.loading) {
-        console.log('ddfdfdffdffd', data,);
         return <div className='flex justify-center items-center h-screen'>
             <CircularProgress />
         </div>

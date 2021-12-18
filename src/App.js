@@ -10,6 +10,8 @@ import SignUp from './Components/Pages/SignUp/SignUp';
 import Help from './Components/Pages/Help/Help';
 import Announcement from './Components/Pages/Announcement/Announcement';
 import ShowOff from './Components/Pages/ShowOff/ShowOff';
+import Discussion from './Components/Pages/Discussion/Discussion';
+import Personal from './Components/Pages/Personal/Personal';
 function App() {
   const { handleSignOut } = useFirebase();
 
@@ -23,6 +25,8 @@ function App() {
             <Route path='/help' element={<PrivateRoute><Help></Help></PrivateRoute>}></Route>
             <Route path='/showoff' element={<PrivateRoute><ShowOff></ShowOff></PrivateRoute>}> </Route>
             <Route path='/announcement' element={<PrivateRoute><Announcement></Announcement></PrivateRoute>}> </Route>
+            <Route path='/discussion' element={<PrivateRoute><Discussion></Discussion></PrivateRoute>}> </Route>
+            <Route path='/:email/*' element={<PrivateRoute><Personal></Personal></PrivateRoute>}> </Route>
           </Route>
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/signup' element={<SignUp></SignUp>}></Route>

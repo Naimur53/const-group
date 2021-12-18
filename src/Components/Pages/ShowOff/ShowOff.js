@@ -5,7 +5,7 @@ const ShowOff = () => {
     return (
         <div>
             <Post></Post>
-            its show off
+            Coming soon...
         </div>
     );
 };

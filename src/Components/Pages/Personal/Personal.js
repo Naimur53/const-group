@@ -1,24 +1,29 @@
 import { CircularProgress, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFromDB, selectData } from '../../../features/data/dataSlice';
+import { useLocation, useParams } from 'react-router';
+import { myPost, selectData } from '../../../features/data/dataSlice';
 import CompoCard from '../../SmallComponents/CompoCard/CompoCard';
-import Post from '../../SmallComponents/Post/Post';
 
-const Announcement = () => {
-    const dispatch = useDispatch();
+const Personal = () => {
     const data = useSelector(selectData);
+    const { email } = useParams();
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const type = location.pathname?.split('/')[2];
     useEffect(() => {
-        dispatch(getFromDB('announcement'));
-    }, [data.postLoad])
-
+        dispatch(myPost({ email, type }))
+    }, [location])
     return (
         <div className='h-screen px-2 pb-36 overflow-hidden overflow-y-scroll'>
-            <Post></Post>
+            dfdf
             <Grid container spacing={2}>
-
+                <div className="mt-32 mx-2">Post:</div>
                 {
-                    data?.getAnnouncement?.map(sData => <CompoCard key={sData._id} info={sData} data={data}  ></CompoCard>)
+                    type === 'myPost' && data?.getMyPost?.map(sData => <CompoCard data={data} key={sData._id} info={sData}></CompoCard>)
+                }
+                {
+                    type === 'loved' && data?.getMyLovedPost?.map(sData => <CompoCard key={sData._id} data={data} info={sData}></CompoCard>)
                 }
                 <Grid items xs={12}>
                     {
@@ -34,4 +39,4 @@ const Announcement = () => {
     );
 };
 
-export default Announcement;
+export default Personal;

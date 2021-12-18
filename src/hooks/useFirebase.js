@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup, getAuth, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { initializeAppAuthentication } from "../Components/firebase/firebase.init";
 
 import { useDispatch } from 'react-redux'
@@ -26,7 +26,6 @@ const useFirebase = () => {
     // }
 
     const googleSignIn = (location, navigate) => {
-        console.log('hi');
         signInWithPopup(auth, googleProvider)
             .then(result => {
                 const user = result.user;
@@ -40,7 +39,6 @@ const useFirebase = () => {
 
     const signUpWithEmail = (info) => {
         const { name, email, password, location, navigate } = info;
-        console.log('info', info);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -56,8 +54,7 @@ const useFirebase = () => {
                     // await handleSignOut();
                     // await logInWithEmail({ email, password });
                     // console.log(user);
-                    // saveUser(user, "POST");
-                    console.log('update success', user);
+                    // saveUser(user, "POST"); 
                     // saveUser(user, "POST");
 
 

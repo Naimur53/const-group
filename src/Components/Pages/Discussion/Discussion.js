@@ -1,21 +1,17 @@
-import { CircularProgress } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { CircularProgress, Grid } from '@mui/material';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFromDB, selectData } from '../../../features/data/dataSlice';
-import Grid from '@mui/material/Grid';
-
 import CompoCard from '../../SmallComponents/CompoCard/CompoCard';
 import Post from '../../SmallComponents/Post/Post';
 
-const Help = () => {
+const Discussion = () => {
 
     const dispatch = useDispatch();
     const data = useSelector(selectData);
-    console.log(data.getFromDB);
     useEffect(() => {
-        dispatch(getFromDB('help'));
+        dispatch(getFromDB('discussion'));
     }, [data.postLoad])
-    console.log(data.getLoad);
     // if (data.getLoad) {
     //     return 
     // }
@@ -25,7 +21,7 @@ const Help = () => {
             <Grid container spacing={2}>
 
                 {
-                    data?.getHelp?.map(sData => <CompoCard key={sData._id} info={sData} data={data}  ></CompoCard>)
+                    data?.getDiscussion?.map(sData => <CompoCard key={sData._id} info={sData} data={data}  ></CompoCard>)
                 }
                 <Grid items xs={12}>
                     {
@@ -41,4 +37,4 @@ const Help = () => {
     );
 };
 
-export default Help;
+export default Discussion;
