@@ -90,6 +90,9 @@ const useFirebase = () => {
                 console.log('find the user and now');
                 dispatch(isAdmin({ email: user.email }))
             }
+            else {
+                dispatch(setLoading(false))
+            }
 
         });
     }, [auth]);
