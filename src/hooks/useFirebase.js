@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { initializeAppAuthentication } from "../Components/firebase/firebase.init";
 
 import { useDispatch } from 'react-redux'
-import { login, logout, setLoading } from "../features/data/dataSlice";
+import { isAdmin, login, logout, saveUserToDb, setLoading } from "../features/data/dataSlice";
 initializeAppAuthentication();
 
 const useFirebase = () => {
@@ -29,7 +29,7 @@ const useFirebase = () => {
         signInWithPopup(auth, googleProvider)
             .then(result => {
                 const user = result.user;
-                // saveUser(user, "PUT"); 
+                // saveUser(user, "PUT");  
                 navigate(location.state?.from.pathname || '/');
             })
             .catch(error => {
@@ -44,18 +44,11 @@ const useFirebase = () => {
                 // Signed in 
                 const user = userCredential.user;
                 //save user ot database
+                dispatch(saveUserToDb({ displayName: name, email }))
                 //update user profile
                 updateProfile(auth.currentUser, {
-                    displayName: name, photoURL: "https://i.stack.imgur.com/YaL3s.jpg"
+                    displayName: name, photoURL: "https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png"
                 }).then((data) => {
-                    // Profile updated!
-                    // setUser(user);
-                    // ...
-                    // await handleSignOut();
-                    // await logInWithEmail({ email, password });
-                    // console.log(user);
-                    // saveUser(user, "POST"); 
-                    // saveUser(user, "POST");
 
 
                 }).catch((error) => {
@@ -94,8 +87,9 @@ const useFirebase = () => {
                     photoURL: user.photoURL,
                     uid: user.uid
                 }))
+                console.log('find the user and now');
+                dispatch(isAdmin({ email: user.email }))
             }
-            dispatch(setLoading(false))
 
         });
     }, [auth]);

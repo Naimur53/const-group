@@ -17,6 +17,7 @@ import CampaignIcon from '@mui/icons-material/Campaign';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -99,6 +100,13 @@ const TopBar = () => {
                                     <LocalFireDepartmentIcon></LocalFireDepartmentIcon>
                                 </IconButton>
                             </Tooltip>
+                            {
+                                data.admin && <Tooltip title='DashBoard'>
+                                    <IconButton to='/showoff' component={NavLink}>
+                                        <AdminPanelSettingsIcon></AdminPanelSettingsIcon>
+                                    </IconButton>
+                                </Tooltip>
+                            }
                         </Typography>
                     }
                     <Box sx={{ mx: 'auto', flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
@@ -134,6 +142,16 @@ const TopBar = () => {
                         >
                             Show Off
                         </Button>
+                        {
+                            data.admin && <Button
+                                component={NavLink}
+                                to='/dashboard'
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                Dashboard
+                            </Button>
+                        }
                     </Box>
 
                     <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'block' } }}>

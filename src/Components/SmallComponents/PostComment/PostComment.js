@@ -79,8 +79,11 @@ const PostComment = props => {
                             </div>
                         </div>
 
-                        <input id="comment" accept='image/*' {...register("pic")} className='hidden' type="file" />
-                        <button style={{ backgroundColor: '#ffffff26' }} className='mb-3 mt-4 md:mt-0 text-lg py-2 font-bold px-6 border-green-900  text-white rounded-full' type='submit'>Comment</button>
+                        <input id="comment" accept='image/*' {...register("pic")} className='hidden'
+                            type="file" />
+                        <button style={{ backgroundColor: '#ffffff26' }}
+                            className='mb-3 mt-4 md:mt-0 text-lg py-2 font-bold px-6 border-green-900  text-white rounded-full'
+                            type='submit'>Comment</button>
                     </div>
 
                     {/* modal------------------ */}

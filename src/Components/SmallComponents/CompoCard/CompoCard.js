@@ -82,7 +82,7 @@ const CompoCard = props => {
             <Avatar sx={{ width: 40, height: 40 }} alt="Remy Sharp" src={client?.photoURL} />
           }
           action={
-            client?.email === data?.user?.email ? <IconButton onClick={handleOpenUserMenu} aria-label="settings">
+            client?.email === data?.user?.email || data.admin ? <IconButton onClick={handleOpenUserMenu} aria-label="settings">
               <MoreVertIcon />
             </IconButton> :
               <IconButton aria-label="settings">

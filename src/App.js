@@ -12,6 +12,8 @@ import Announcement from './Components/Pages/Announcement/Announcement';
 import ShowOff from './Components/Pages/ShowOff/ShowOff';
 import Discussion from './Components/Pages/Discussion/Discussion';
 import Personal from './Components/Pages/Personal/Personal';
+import Dashboard from './Components/Pages/Dashboard/Dashboard';
+import AdminRoute from './Components/Pages/AdminRoute/AdminRoute';
 function App() {
   const { handleSignOut } = useFirebase();
 
@@ -28,6 +30,7 @@ function App() {
             <Route path='/discussion' element={<PrivateRoute><Discussion></Discussion></PrivateRoute>}> </Route>
             <Route path='/:email/*' element={<PrivateRoute><Personal></Personal></PrivateRoute>}> </Route>
           </Route>
+          <Route path='/dashboard' element={<AdminRoute><Dashboard></Dashboard></AdminRoute>}></Route>
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/signup' element={<SignUp></SignUp>}></Route>
         </Routes>

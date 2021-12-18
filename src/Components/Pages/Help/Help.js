@@ -27,7 +27,7 @@ const Help = () => {
                 {
                     data?.getHelp?.map(sData => <CompoCard key={sData._id} info={sData} data={data}  ></CompoCard>)
                 }
-                <Grid items xs={12}>
+                <Grid item xs={12}>
                     {
                         data.getLoad && <div className='mt-20 flex items-center justify-center'>
                             <CircularProgress></CircularProgress>

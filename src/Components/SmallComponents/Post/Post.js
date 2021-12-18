@@ -14,7 +14,7 @@ const Post = props => {
     const { pathname } = useLocation();
     const data = useSelector(selectData);
     const dispatch = useDispatch();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
     const onSubmit = info => {
         if (pathname === '/') {
             return alert('plz select a route')
@@ -36,6 +36,7 @@ const Post = props => {
             }
         }
         dispatch(postIndb(mainData))
+        reset();
     }
     // modal style 
     const style = {
