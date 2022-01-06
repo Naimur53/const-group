@@ -211,42 +211,10 @@ export const dataSlice = createSlice({
 
       })
       .addCase(deletePost.fulfilled, (state, action) => {
-        const pushData = action.payload.postIn;
-        console.log('deleteDone', action.payload);
 
-        if (pushData === '/help' && state.getHelp !== null) {
-          state.getHelp = state.getHelp.filter(data => data._id !== action.payload._id)
-        }
-        else if (pushData === '/announcement' && state.getAnnouncement !== null) {
-          state.getAnnouncement = state.getAnnouncement.filter(data => data._id !== action.payload._id)
-        }
-        else if (pushData === '/discussion' && state.getDiscussion !== null) {
-          state.getDiscussion = state.getDiscussion.filter(data => data._id !== action.payload._id)
-        }
       })
       .addCase(deleteComment.fulfilled, (state, action) => {
-        console.log(action.payload, 'comment deletitdfdf');
-        const data = action.payload.data;
-        console.log(data);
-        const pushData = data.postIn;
-        if (pushData === '/help') {
-          state.getHelp = state.getHelp.filter(data => data._id !== action.payload._id)
-          const index = state.getHelp.findIndex(sData => sData._id === data.postId)
-          console.log(index);
-          state.getHelp[index].comments = state.getHelp[index].comments.filter(sData => sData.time != data.time)
-        }
-        else if (pushData === '/announcement') {
-          state.getAnnouncement = state.getAnnouncement.filter(data => data._id !== action.payload._id)
-          const index = state.getAnnouncement.findIndex(sData => sData._id === data.postId)
-          console.log(index);
-          state.getAnnouncement[index].comments = state.getHelp[index].comments.filter(sData => sData.time != data.time)
-        }
-        else if (pushData === '/discussion') {
-          state.getDiscussion = state.getDiscussion.filter(data => data._id !== action.payload._id)
-          const index = state.getDiscussion.findIndex(sData => sData._id === data.postId)
-          console.log(index);
-          state.getDiscussion[index].comments = state.getHelp[index].comments.filter(sData => sData.time != data.time)
-        }
+
       })
       .addCase(myPost.pending, (state, action) => {
         // Add user to the state array

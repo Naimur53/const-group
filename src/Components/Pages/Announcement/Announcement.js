@@ -17,7 +17,7 @@ const Announcement = () => {
             {
                 data.admin && <Post></Post>
             }
-            <Grid container spacing={2}>
+            <Grid sx={{ mt: !data.admin && 10 }} container spacing={2}>
 
                 {
                     data?.getAnnouncement?.map(sData => <CompoCard key={sData._id} info={sData} data={data}  ></CompoCard>)

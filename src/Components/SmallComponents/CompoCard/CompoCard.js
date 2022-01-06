@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -34,6 +34,7 @@ const CompoCard = props => {
   const [value, setValue] = useState(null)
   const data = props.data;
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const componentWrapper = useRef(null)
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   }; const handleCloseUserMenu = () => {
@@ -66,16 +67,21 @@ const CompoCard = props => {
 
   }
   const handleDelete = id => {
+    componentWrapper.current.style.display = 'none'
     if (!props.comment) {
       dispatch(deletePost({ _id: id, postIn: postIn }));
       console.log('this is not comment');
     }
     else {
+      console.log({ ...props.info }, this);
+
       dispatch(deleteComment({ ...props.info }))
     }
+    console.log({ ...props.info },);
+
   }
   return (
-    <Grid item xs={12}>
+    <Grid ref={componentWrapper} item xs={12}>
       <Card sx={{ backgroundColor: ' #ffffff26' }}>
         <CardHeader
           avatar={
@@ -132,7 +138,7 @@ const CompoCard = props => {
               onClick={handleExpandClick}
               aria-label="show more"
             >
-              <span className='text-base mr-2'>Comments:</span>
+              <span className='text-base mr-2 '>Comments:</span>
               <span className='text-base mr-2'>{comments.length}</span>
 
             </ExpandMore>
@@ -162,7 +168,7 @@ const CompoCard = props => {
           {
             <Button onClick={() => {
               handleCloseUserMenu();
-              handleDelete(_id)
+              handleDelete()
             }}>Delete</Button>
           }
         </Menu>

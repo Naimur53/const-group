@@ -87,6 +87,13 @@ const useFirebase = () => {
                     photoURL: user.photoURL,
                     uid: user.uid
                 }))
+                console.log({
+                    displayName: user.displayName,
+                    email: user.email,
+                    createdAt: user.metadata.createdAt,
+                    photoURL: user.photoURL,
+                    uid: user.uid
+                });
                 console.log('find the user and now');
                 dispatch(isAdmin({ email: user.email }))
             }

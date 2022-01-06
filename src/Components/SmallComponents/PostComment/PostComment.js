@@ -13,15 +13,13 @@ const PostComment = props => {
     const dispatch = useDispatch();
     const { _id, code, codeType, postIn } = props.info;
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const [postCode, setPostCode] = useState(false);
-    const handleClick = () => setPostCode(!postCode);
     const onSubmit = info => {
         info.time = new Date();
         info.postId = _id;
         info.postIn = postIn;
         info.client = JSON.stringify(data.user);
-
-        if (postCode) {
+        console.log(info);
+        if (info.check) {
             info.code = codes;
         }
         const mainData = new FormData();
@@ -99,12 +97,12 @@ const PostComment = props => {
 
                                 </Typography>
                                 <FormControlLabel
-                                    value="start"
+
+                                    {...register("check")}
 
                                     control={<Checkbox
                                     />}
                                     label="Also post the code"
-                                    onClick={handleClick}
                                     labelPlacement="start"
                                 />
                                 <Button
