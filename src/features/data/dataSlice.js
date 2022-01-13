@@ -14,6 +14,10 @@ const initialState = {
   getMyPost: null,
   getMyLovedPost: null,
   profileToggle: false,
+  groups: [],
+  currentGroups: [],
+  canAccess: false,
+  gpInfo: {},
 };
 
 export const saveUserToDb = createAsyncThunk(
@@ -49,10 +53,10 @@ export const postIndb = createAsyncThunk(
   }
 )
 export const getFromDB = createAsyncThunk(
-  'getFromDb/getFromDB',
+  'data/getFromDB',
   async (info) => {
     console.log('getting');
-    const response = await axios.get(`https://warm-dusk-65209.herokuapp.com/userPost/${info}`)
+    const response = await axios.get(`http://localhost:5000/userPost?gpName=${info.gpName}&postIn=${info.postIn}`)
     return response.data
   }
 )
@@ -82,7 +86,7 @@ export const sendComment = createAsyncThunk(
 export const deletePost = createAsyncThunk(
   'deletePost/postIndb',
   async (info) => {
-    const response = await axios.delete(`https://warm-dusk-65209.herokuapp.com/userPost/${info._id}`, { data: info })
+    const response = await axios.delete(`https://warm-dusk-65209.herokuapp.com/userPost/${info._id}`, { data: info });
 
     return response.data;
   }
@@ -104,6 +108,28 @@ export const myPost = createAsyncThunk(
     return { info, data: response.data };
   }
 )
+export const createGroup = createAsyncThunk(
+  'data/createGroup',
+  async (info) => {
+    const response = await axios.post(`http://localhost:5000/createGroup`, info)
+    return response.data;
+  }
+)
+export const allGroup = createAsyncThunk(
+  'data/allGroup',
+  async (info) => {
+    const response = await axios.get(`http://localhost:5000/allGroup`, info)
+    return response.data;
+  }
+)
+export const isMembers = createAsyncThunk(
+  'data/allGroup',
+  async (info) => {
+    const response = await axios.get(`http://localhost:5000/isMembers`, info)
+    return response.data;
+  }
+)
+
 
 export const dataSlice = createSlice({
   name: 'data',
@@ -120,6 +146,11 @@ export const dataSlice = createSlice({
     },
     handleProfileToggle: (state, action) => {
       state.profileToggle = !state.profileToggle;
+    },
+    resetState: (state, action) => {
+      state.getAnnouncement = [];
+      state.getHelp = [];
+      state.getDiscussion = [];
     }
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -161,18 +192,17 @@ export const dataSlice = createSlice({
         state.getLoad = true;;
       })
       .addCase(getFromDB.fulfilled, (state, action) => {
-        // Add user to the state array
-        console.log('got the data');
+        // Add user to the state array 
         state.getLoad = false;
         state.getFromDB = action.payload;
-        const pushData = action.payload[0]?.postIn;
-        if (pushData === '/help') {
+        const pushData = action.payload[0]?.postIn?.split('/')[2];
+        if (pushData === 'help') {
           state.getHelp = action.payload
         }
-        else if (pushData === '/announcement') {
+        else if (pushData === 'announcement') {
           state.getAnnouncement = action.payload
         }
-        else if (pushData === '/discussion') {
+        else if (pushData === 'discussion') {
           state.getDiscussion = action.payload
         }
       })
@@ -211,7 +241,19 @@ export const dataSlice = createSlice({
 
       })
       .addCase(deletePost.fulfilled, (state, action) => {
+        const pushData = action.payload.postIn;
+        console.log(pushData);
+        console.log('deleteDone', action.payload);
 
+        if (pushData === '/help' && state.getHelp !== null) {
+          state.getHelp = state.getHelp.filter(data => data._id !== action.payload._id)
+        }
+        else if (pushData === '/announcement' && state.getAnnouncement !== null) {
+          state.getAnnouncement = state.getAnnouncement.filter(data => data._id !== action.payload._id)
+        }
+        else if (pushData === '/discussion' && state.getDiscussion !== null) {
+          state.getDiscussion = state.getDiscussion.filter(data => data._id !== action.payload._id)
+        }
       })
       .addCase(deleteComment.fulfilled, (state, action) => {
 
@@ -233,10 +275,17 @@ export const dataSlice = createSlice({
         }
         state.getLoad = false;
       })
+      .addCase(createGroup.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(allGroup.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.groups = action.payload;
+      })
   },
 });
 
-export const { login, logout, handleProfileToggle, setLoading } = dataSlice.actions;
+export const { login, logout, handleProfileToggle, resetState, setGpInfo, setLoading } = dataSlice.actions;
 export const selectData = (state) => state.data;
 
 

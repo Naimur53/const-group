@@ -5,20 +5,21 @@ import Profile from '../Profile/Profile';
 const Home = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    if (location.pathname === '/') {
-        navigate('/help')
-    }
     return (
-        <Container maxWidth='xl'>
+        <Container maxWidth='lg'>
             <Grid container spacing={2}>
-                <Grid sx={{ display: { xs: 'none', md: 'block' } }} item xs={12} md={4}>
+                <Grid sx={{ display: { xs: 'none', md: 'block' } }} item xs={12} md={3}>
                     <div className="h-screen overflow-y-scroll">
                         <Profile></Profile>
                     </div>
                 </Grid>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={7}>
                     <div className="px-3">
                         <Outlet></Outlet>
+                    </div>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                    <div className="px-3">
                     </div>
                 </Grid>
             </Grid>

@@ -18,14 +18,13 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
+import { useLocation } from 'react-router-dom'
 const TopBar = () => {
     const data = useSelector(selectData);
     const dispatch = useDispatch();
     const { handleSignOut } = useFirebase();
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -37,12 +36,17 @@ const TopBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    const { pathname } = useLocation();
+    console.log(pathname);
 
+    React.useEffect(() => {
+
+    }, [pathname])
     return (
         <AppBar sx={{ backgroundColor: '#082429' }} position="fixed">
             <Container maxWidth="xl">
                 <Toolbar className='justify-between' sx={{ display: { xs: 'flex', md: "none" } }} disableGutters>
-                    <div>Const Group</div>
+                    <div><NavLink to='/'>Const Group</NavLink></div>
                     <div>
                         {
                             data?.user?.email ? <Tooltip title="Open settings">
@@ -66,7 +70,7 @@ const TopBar = () => {
                         component="div"
                         sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                     >
-                        Const Group
+                        <NavLink to='/'>Const Group</NavLink>
                     </Typography>
 
                     <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
@@ -110,43 +114,10 @@ const TopBar = () => {
                         </Typography>
                     }
                     <Box sx={{ mx: 'auto', flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-                        <Button
-                            component={NavLink}
-                            to='/announcement'
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            Announcement
-                        </Button>
-                        <Button
-                            component={NavLink}
-                            to='/help'
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            Help
-                        </Button>
-                        <Button
-                            component={NavLink}
-                            to='/discussion'
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            Discussion
-                        </Button>
-                        <Button
-                            component={NavLink}
-                            to='/showoff'
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            Show Off
-                        </Button>
                         {
                             data.admin && <Button
                                 component={NavLink}
                                 to='/dashboard'
-                                onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 Dashboard

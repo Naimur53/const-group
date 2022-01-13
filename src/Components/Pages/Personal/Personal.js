@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router';
 import { myPost, selectData } from '../../../features/data/dataSlice';
-import CompoCard from '../../SmallComponents/CompoCard/CompoCard';
+import PostCard from '../../SmallComponents/PostCard/PostCard';
 
 const Personal = () => {
     const data = useSelector(selectData);
@@ -20,10 +20,10 @@ const Personal = () => {
             <Grid container spacing={2}>
                 <div className="mt-32 mx-2">Post:</div>
                 {
-                    type === 'myPost' && data?.getMyPost?.map(sData => <CompoCard data={data} key={sData._id} info={sData}></CompoCard>)
+                    type === 'myPost' && data?.getMyPost?.map(sData => <PostCard data={data} key={sData._id} info={sData}></PostCard>)
                 }
                 {
-                    type === 'loved' && data?.getMyLovedPost?.map(sData => <CompoCard key={sData._id} data={data} info={sData}></CompoCard>)
+                    type === 'loved' && data?.getMyLovedPost?.map(sData => <PostCard key={sData._id} data={data} info={sData}></PostCard>)
                 }
                 <Grid items xs={12}>
                     {

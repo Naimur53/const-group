@@ -12,12 +12,16 @@ import CloseIcon from '@mui/icons-material/Close';
 const Post = props => {
     const [code, setCode] = useState(null);
     const { pathname } = useLocation();
+
     const data = useSelector(selectData);
     const dispatch = useDispatch();
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
+
+    const postInPath = pathname.split('/')[2];
+
     const onSubmit = info => {
-        if (pathname === '/') {
-            return alert('plz select a route')
+        if (postInPath === '' || !postInPath) {
+            return alert('plz select a route');
         }
         info.time = new Date()
         // new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -36,6 +40,7 @@ const Post = props => {
             }
         }
         dispatch(postIndb(mainData))
+        console.log(info);
         reset();
     }
     // modal style 
@@ -57,7 +62,7 @@ const Post = props => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     return (
-        <div className='flex justify-center mt-36 md:mt-20 '>
+        <div className='flex justify-center '>
             {
                 !data.postLoad ? <form style={{ backgroundColor: '#ffffff26' }} className="flex flex-col   w-full px-3 my-2 py-2 rounded-md "
                     onSubmit={handleSubmit(onSubmit)}
@@ -67,9 +72,9 @@ const Post = props => {
                             type='text'
                             className="placeholder-gray-100  w-full bg-transparent border-b py-2 border-red-100 px-2"
                             placeholder={
-                                pathname === '/help' ? 'Asked for help' : pathname === '/announcement' ? 'Lets announce' : pathname === '/showoff' ? 'Lets Show off' : pathname === '/discussion' && 'Lets Discuss'
+                                postInPath === 'help' ? 'Asked for help' : postInPath === 'announcement' ? 'Lets announce' : postInPath === 'showoff' ? 'Lets Show off' : postInPath === 'discussion' && 'Lets Discuss'
                             }
-                            {...register("PostInfo", { required: true })} />
+                            {...register("postInfo", { required: true })} />
                     </div>
 
                     <div className='flex flex-col md:flex-row justify-between py-4'>

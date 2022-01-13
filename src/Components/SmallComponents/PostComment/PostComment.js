@@ -12,12 +12,14 @@ const PostComment = props => {
     const data = useSelector(selectData);
     const dispatch = useDispatch();
     const { _id, code, codeType, postIn } = props.info;
+    console.log(props.info);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = info => {
         info.time = new Date();
         info.postId = _id;
         info.postIn = postIn;
         info.client = JSON.stringify(data.user);
+        info.codeType = codeType;
         console.log(info);
         if (info.check) {
             info.code = codes;

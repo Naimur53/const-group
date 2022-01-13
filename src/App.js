@@ -14,6 +14,8 @@ import Discussion from './Components/Pages/Discussion/Discussion';
 import Personal from './Components/Pages/Personal/Personal';
 import Dashboard from './Components/Pages/Dashboard/Dashboard';
 import AdminRoute from './Components/Pages/AdminRoute/AdminRoute';
+import Groups from './Components/Pages/Groups/Groups';
+import CreateGroup from './Components/Pages/CreateGroup/CreateGroup';
 function App() {
   const { handleSignOut } = useFirebase();
 
@@ -22,14 +24,16 @@ function App() {
       <BrowserRouter>
         <TopBar></TopBar>
         <Routes>
-          <Route path='/' element={<PrivateRoute><Home></Home></PrivateRoute>}>
-            <Route path='/' element={<PrivateRoute><Help></Help></PrivateRoute>}> </Route>
-            <Route path='/help' element={<PrivateRoute><Help></Help></PrivateRoute>}></Route>
-            <Route path='/showoff' element={<PrivateRoute><ShowOff></ShowOff></PrivateRoute>}> </Route>
-            <Route path='/announcement' element={<PrivateRoute><Announcement></Announcement></PrivateRoute>}> </Route>
-            <Route path='/discussion' element={<PrivateRoute><Discussion></Discussion></PrivateRoute>}> </Route>
-            <Route path='/:email/*' element={<PrivateRoute><Personal></Personal></PrivateRoute>}> </Route>
+          <Route path='/:gpName' element={<PrivateRoute><Home></Home></PrivateRoute>}>
+            <Route path='/:gpName' element={<PrivateRoute><Help></Help></PrivateRoute>}> </Route>
+            <Route path='/:gpName/help' element={<PrivateRoute><Help></Help></PrivateRoute>}></Route>
+            <Route path='/:gpName/showoff' element={<PrivateRoute><ShowOff></ShowOff></PrivateRoute>}> </Route>
+            <Route path='/:gpName/announcement' element={<PrivateRoute><Announcement></Announcement></PrivateRoute>}> </Route>
+            <Route path='/:gpName/discussion' element={<PrivateRoute><Discussion></Discussion></PrivateRoute>}> </Route>
+
           </Route>
+          <Route path='/' element={<Groups></Groups>}></Route>
+          <Route path='/group/create' element={<CreateGroup></CreateGroup>}></Route>
           <Route path='/dashboard' element={<AdminRoute><Dashboard></Dashboard></AdminRoute>}></Route>
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/signup' element={<SignUp></SignUp>}></Route>

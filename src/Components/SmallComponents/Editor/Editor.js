@@ -4,6 +4,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/theme/neat.css';
 import 'codemirror/mode/xml/xml.js';
+import 'codemirror/mode/css/css';
 import 'codemirror/mode/javascript/javascript.js';
 const Editor = ({ language, value, onChange, readOnly }) => {
     const handleChange = (editor, data, value) => {
