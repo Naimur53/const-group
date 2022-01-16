@@ -36,12 +36,7 @@ const TopBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-    const { pathname } = useLocation();
-    console.log(pathname);
 
-    React.useEffect(() => {
-
-    }, [pathname])
     return (
         <AppBar sx={{ backgroundColor: '#082429' }} position="fixed">
             <Container maxWidth="xl">
@@ -122,6 +117,9 @@ const TopBar = () => {
                             >
                                 Dashboard
                             </Button>
+                        }
+                        {
+                            data.gpInfo?.gpName && <Button sx={{ my: 2, color: 'white', display: 'block' }}>{data.gpInfo?.gpName}</Button>
                         }
                     </Box>
 

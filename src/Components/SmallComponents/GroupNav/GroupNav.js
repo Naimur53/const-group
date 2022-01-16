@@ -7,41 +7,47 @@ import { selectData } from '../../../features/data/dataSlice';
 
 const GroupNav = () => {
     const data = useSelector(selectData);
-    const { gpName } = useParams();
-    // useEffect(()=>{
+    const { gpId } = useParams();
+    // useEffect(() => {
     //     console.log(pathname);
 
-    // },[])
-    console.log(gpName);
+    // }, [])
     return (
         <div className='flex mt-36 md:mt-20 '>
             <Button
                 component={NavLink}
-                to={`/${gpName}/announcement`}
+                to={`/${gpId}/announcement`}
                 sx={{ my: 2, color: 'white', display: 'block' }}
             >
                 Announcement
             </Button>
             <Button
                 component={NavLink}
-                to={`/${gpName}/help`}
+                to={`/${gpId}/help`}
                 sx={{ my: 2, color: 'white', display: 'block' }}
             >
                 Help
             </Button>
             <Button
                 component={NavLink}
-                to={`/${gpName}/discussion`}
+                to={`/${gpId}/discussion`}
                 sx={{ my: 2, color: 'white', display: 'block' }}
             >
                 Discussion
             </Button>
             <Button
                 component={NavLink}
-                to={`/${gpName}/discussion`}
+                to={`/${gpId}/discussion`}
                 sx={{ my: 2, color: 'white', display: 'block' }}
             >
                 Show Off
+            </Button>
+            <Button
+                component={NavLink}
+                to={`/${gpId}/manageUser`}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+                Manage User
             </Button>
 
         </div>

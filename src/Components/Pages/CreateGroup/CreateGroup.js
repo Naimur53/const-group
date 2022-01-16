@@ -11,15 +11,15 @@ const CreateGroup = () => {
     const data = useSelector(selectData)
     const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
     const onSubmit = gpData => {
-        gpData.members = [data?.user?.email];
-        gpData.admin = [data?.user?.email];
-        gpData.creator = data?.user?.email;
+        gpData.members = [data?.user];
+        gpData.admin = [data?.user];
+        gpData.creator = data?.user;
         if (!gpData.type) {
             gpData.type = 'public';
         }
         console.log(gpData);
         dispatch(createGroup(gpData))
-        navigate('/groups');
+        navigate('/');
     }
     const handleType = e => {
         setValue('type', e.target.value);

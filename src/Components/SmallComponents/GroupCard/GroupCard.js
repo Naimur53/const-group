@@ -7,13 +7,14 @@ import { resetState, selectData, setGpInfo } from '../../../features/data/dataSl
 
 const GroupCard = props => {
     const dispatch = useDispatch();
-    const { gpName, members } = props.info
+    const { gpName, _id, members } = props.info
     const data = useSelector(selectData);
     const handleCheckout = () => {
         dispatch(resetState())
         dispatch(setGpInfo(props.info))
 
     }
+    const isMember = members.filter(user => user.email === data.user.email).length;
     return (
         <Grid item xs={4}>
             <Box sx={{ backgroundColor: ' #ffffff26' }} className='my-3'>
@@ -21,7 +22,7 @@ const GroupCard = props => {
                 <h2>user:{members.length}</h2>
                 <div>
                     {
-                        members.includes(data?.user?.email) ? <Button component={NavLink} onClick={handleCheckout} to={`/${gpName.split(' ').join('-')}/help`}>Checkout</Button> : <Button component={NavLink} to={`/`}>Request For join</Button>
+                        isMember ? <Button component={NavLink} onClick={handleCheckout} to={`/${_id}/help`}>Checkout</Button> : <Button component={NavLink} to={`/`}>Request For join</Button>
                     }
                 </div>
             </Box>

@@ -14,9 +14,9 @@ const Discussion = () => {
     const { pathname } = useLocation()
 
     useEffect(() => {
-        const gpName = pathname?.split('/')[1]
+        const gpId = pathname?.split('/')[1]
         const postIn = pathname?.split('/')[2]
-        dispatch(getFromDB({ gpName, postIn }));
+        dispatch(getFromDB({ gpId, postIn }));
     }, [data.postLoad, pathname])
     // if (data.getLoad) {
     //     return 

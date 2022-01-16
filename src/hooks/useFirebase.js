@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { initializeAppAuthentication } from "../Components/firebase/firebase.init";
 
 import { useDispatch } from 'react-redux'
-import { isAdmin, login, logout, saveUserToDb, setLoading } from "../features/data/dataSlice";
+import { isAdmin, login, logout, putUserToDb, saveUserToDb, setLoading } from "../features/data/dataSlice";
 initializeAppAuthentication();
 
 const useFirebase = () => {
@@ -30,6 +30,13 @@ const useFirebase = () => {
             .then(result => {
                 const user = result.user;
                 // saveUser(user, "PUT");  
+                dispatch(putUserToDb({
+                    displayName: user.displayName,
+                    email: user.email,
+                    createdAt: user.metadata.createdAt,
+                    photoURL: user.photoURL,
+                    uid: user.uid
+                }))
                 navigate(location.state?.from.pathname || '/');
             })
             .catch(error => {
@@ -44,7 +51,13 @@ const useFirebase = () => {
                 // Signed in 
                 const user = userCredential.user;
                 //save user ot database
-                dispatch(saveUserToDb({ displayName: name, email }))
+                dispatch(saveUserToDb({
+                    displayName: name,
+                    email: user.email,
+                    createdAt: user.metadata.createdAt,
+                    photoURL: 'https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png',
+                    uid: user.uid
+                }))
                 //update user profile
                 updateProfile(auth.currentUser, {
                     displayName: name, photoURL: "https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png"
@@ -75,6 +88,7 @@ const useFirebase = () => {
                 console.log(errorMessage);
             });
     }
+
     useEffect(() => {
         dispatch(setLoading(true))
         onAuthStateChanged(auth, (user) => {
@@ -102,7 +116,7 @@ const useFirebase = () => {
             }
 
         });
-    }, [auth]);
+    }, []);
 
     const handleSignOut = () => {
         signOut(auth).then(() => {

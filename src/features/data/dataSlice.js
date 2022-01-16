@@ -23,8 +23,14 @@ const initialState = {
 export const saveUserToDb = createAsyncThunk(
   'saveUserToDb/user',
   async (info) => {
-    console.log('getting');
     const response = await axios.post(`https://warm-dusk-65209.herokuapp.com/user`, info);
+    return response.data
+  }
+)
+export const putUserToDb = createAsyncThunk(
+  'data/putUserToDb',
+  async (info) => {
+    const response = await axios.put(`http://localhost:5000/user`, info);
     return response.data
   }
 )
@@ -56,7 +62,7 @@ export const getFromDB = createAsyncThunk(
   'data/getFromDB',
   async (info) => {
     console.log('getting');
-    const response = await axios.get(`http://localhost:5000/userPost?gpName=${info.gpName}&postIn=${info.postIn}`)
+    const response = await axios.get(`http://localhost:5000/userPost?gpId=${info.gpId}&postIn=${info.postIn}`)
     return response.data
   }
 )
@@ -122,10 +128,17 @@ export const allGroup = createAsyncThunk(
     return response.data;
   }
 )
-export const isMembers = createAsyncThunk(
-  'data/allGroup',
+export const getGroupInfo = createAsyncThunk(
+  'data/getGroupInfo',
   async (info) => {
-    const response = await axios.get(`http://localhost:5000/isMembers`, info)
+    const response = await axios.get(`http://localhost:5000/group/${info._id}`)
+    return response.data;
+  }
+)
+export const addUserToGroup = createAsyncThunk(
+  'data/addUserToGroup',
+  async (info) => {
+    const response = await axios.put(`http://localhost:5000/addUserToGroup/`, info);
     return response.data;
   }
 )
@@ -143,6 +156,9 @@ export const dataSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setGpInfo: (state, action) => {
+      state.gpInfo = action.payload;
     },
     handleProfileToggle: (state, action) => {
       state.profileToggle = !state.profileToggle;
@@ -281,6 +297,20 @@ export const dataSlice = createSlice({
       .addCase(allGroup.fulfilled, (state, action) => {
         console.log(action.payload);
         state.groups = action.payload;
+      })
+      .addCase(getGroupInfo.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.gpInfo = action.payload;
+      })
+      .addCase(addUserToGroup.pending, (state, action) => {
+        state.postLoad = true;
+      })
+      .addCase(addUserToGroup.fulfilled, (state, action) => {
+        state.postLoad = false;
+        state.gpInfo.members.push(action.payload.user)
+      })
+      .addCase(addUserToGroup.rejected, (state, action) => {
+        state.postLoad = false;
       })
   },
 });

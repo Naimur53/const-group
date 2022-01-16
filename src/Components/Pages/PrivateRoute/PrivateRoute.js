@@ -15,10 +15,8 @@ const PrivateRoute = ({ children }) => {
         </div>
     }
     if (!data?.user?.email) {
-
         return <Navigate to="/login" state={{ from: location }} />;
     }
-    // if(!data?.user?.email===data.gpInfo)
     return (
         <>
             {children}

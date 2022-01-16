@@ -2,7 +2,7 @@ import { Button, Container, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { allGroup, selectData } from '../../../features/data/dataSlice';
+import { allGroup, selectData, setGpInfo } from '../../../features/data/dataSlice';
 import GroupCard from '../../SmallComponents/GroupCard/GroupCard';
 
 const Groups = () => {
@@ -10,6 +10,7 @@ const Groups = () => {
     const data = useSelector(selectData);
     useEffect(() => {
         dispatch(allGroup());
+        dispatch(setGpInfo({}));
     }, [])
     return (
         <div className='mt-32'>
