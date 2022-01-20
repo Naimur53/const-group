@@ -4,10 +4,11 @@ import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserToGroup, selectData } from '../../../features/data/dataSlice';
+import { addUserToGroup, makeGroupAdmin, removeAdminOfGroup, removeUserFromGroup, selectData } from '../../../features/data/dataSlice';
 const AddMember = () => {
     const [memberData, setMemberData] = useState({});
     const [isMember, setIsMember] = useState({});
+    const [isGroupAdmin, setIsGroupAdmin] = useState(false);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
     const dispatch = useDispatch();
     const data = useSelector(selectData);
@@ -22,6 +23,26 @@ const AddMember = () => {
 
     }
     console.log(memberData);
+    const handleMakeAdmin = () => {
+        dispatch(makeGroupAdmin({
+            gpId: data.gpInfo._id,
+            user: memberData
+        }));
+    }
+    const handleRemove = () => {
+
+        dispatch(removeUserFromGroup({
+            gpId: data.gpInfo._id,
+            user: memberData
+        }));
+    }
+    const handleRemoveAdmin = () => {
+
+        dispatch(removeAdminOfGroup({
+            gpId: data.gpInfo._id,
+            user: memberData
+        }));
+    }
     const handleAdd = (e) => {
         dispatch(addUserToGroup({
             user: memberData,
@@ -32,9 +53,24 @@ const AddMember = () => {
     };
 
     useEffect(() => {
-        setIsMember(data?.gpInfo?.members?.filter(user => user.email === memberData.email).length)
+        setIsMember(data?.gpInfo?.members?.filter(user => user.email === memberData?.email).length)
+
+        const isAdmin = Boolean(data?.gpInfo?.admin.filter(sAdmin => sAdmin.email === data.user?.email).length);
+
+        const isCreator = data.gpInfo?.creator?.email === data.user?.email;
+
+
+        if (isCreator) {
+            setIsGroupAdmin("creator");
+        }
+        else if (isAdmin) {
+            setIsGroupAdmin('admin')
+        }
+        else {
+            setIsGroupAdmin('user');
+        }
     }, [memberData, data.gpInfo])
-    console.log(isMember);
+    console.log(isGroupAdmin);
     return (
         <div className='mt-32'>
 
@@ -64,7 +100,29 @@ const AddMember = () => {
                                     <div>
                                         <h2 className='ml-2 text-xl'>{memberData?.displayName}</h2>
                                         {
-                                            !isMember ? <button onClick={!clicked ? handleAdd : null} style={{ backgroundColor: '#ffffff26' }} className=' mb-3  mt-3 text-lg py-2 font-bold px-6 border-green-900  text-white rounded-full' >add to group</button> : <div>Already members </div>
+                                            !isMember ? <button onClick={!clicked ? handleAdd : null} style={{ backgroundColor: '#ffffff26' }} className=' mb-3  mt-3 text-lg py-2 font-bold px-6 border-green-900  text-white rounded-full' >add to group</button> : <div>
+                                                he is
+                                                {
+                                                    memberData?.email === data?.gpInfo.creator.email ? ' creator' : isGroupAdmin === 'creator' ? <div>
+                                                        {
+                                                            Boolean(data?.gpInfo?.admin.filter(sAdmin => sAdmin.email === memberData?.email).length) ? <Button onClick={handleRemoveAdmin}>Remove admin</Button> : <div>
+                                                                <Button onClick={handleRemove}>Remove from the group</Button>
+                                                                <Button onClick={handleMakeAdmin}>Make admin</Button>
+                                                            </div>
+                                                        }
+
+                                                    </div> : isGroupAdmin === 'admin' ? <div>
+                                                        {
+                                                            Boolean(data?.gpInfo?.admin.filter(sAdmin => sAdmin.email === memberData?.email).length) ? " admin" : <div>
+                                                                <Button onClick={handleRemove}>Remove from the group</Button>
+
+                                                            </div>
+                                                        }
+                                                    </div> : 'member'
+                                                }
+
+
+                                            </div>
                                         }
                                     </div>
                                 </div> : memberData === null &&

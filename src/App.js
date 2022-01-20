@@ -18,6 +18,7 @@ import Groups from './Components/Pages/Groups/Groups';
 import CreateGroup from './Components/Pages/CreateGroup/CreateGroup';
 import GroupRoute from './Components/Pages/GroupRoute/GroupRoute';
 import ManageGroupUser from './Components/Pages/ManageGroupUser/ManageGroupUser';
+import ManageRequest from './Components/Pages/ManageRequest/ManageRequest';
 function App() {
   const { handleSignOut } = useFirebase();
 
@@ -33,6 +34,7 @@ function App() {
             <Route path='/:gpId/announcement' element={<PrivateRoute><Announcement></Announcement></PrivateRoute>}> </Route>
             <Route path='/:gpId/discussion' element={<PrivateRoute><GroupRoute><Discussion></Discussion></GroupRoute></PrivateRoute>}> </Route>
             <Route path='/:gpId/manageUser' element={<PrivateRoute><GroupRoute><ManageGroupUser></ManageGroupUser></GroupRoute></PrivateRoute>}> </Route>
+            <Route path='/:gpId/manageRequest' element={<PrivateRoute><GroupRoute><ManageRequest></ManageRequest></GroupRoute></PrivateRoute>}> </Route>
 
           </Route>
           <Route path='/' element={<PrivateRoute><Groups></Groups></PrivateRoute>}></Route>

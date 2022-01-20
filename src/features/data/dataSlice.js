@@ -18,6 +18,7 @@ const initialState = {
   currentGroups: [],
   canAccess: false,
   gpInfo: {},
+  isGpAdmin: false,
 };
 
 export const saveUserToDb = createAsyncThunk(
@@ -54,7 +55,7 @@ export const isAdmin = createAsyncThunk(
 export const postIndb = createAsyncThunk(
   'postInfo/postIndb',
   async (info) => {
-    const response = await axios.post('https://warm-dusk-65209.herokuapp.com/userPost', info)
+    const response = await axios.post('http://localhost:5000/userPost', info)
     return response.data
   }
 )
@@ -138,7 +139,49 @@ export const getGroupInfo = createAsyncThunk(
 export const addUserToGroup = createAsyncThunk(
   'data/addUserToGroup',
   async (info) => {
-    const response = await axios.put(`http://localhost:5000/addUserToGroup/`, info);
+    const response = await axios.put(`http://localhost:5000/addUserToGroup`, info);
+    return response.data;
+  }
+)
+export const removeUserFromGroup = createAsyncThunk(
+  'data/removeUserFromGroup',
+  async (info) => {
+    const response = await axios.put(`http://localhost:5000/removeUserFromGroup`, info);
+    return response.data;
+  }
+)
+export const makeGroupAdmin = createAsyncThunk(
+  'data/makeGroupAdmin',
+  async (info) => {
+    const response = await axios.put(`http://localhost:5000/makeGroupAdmin`, info);
+    return response.data;
+  }
+)
+export const removeAdminOfGroup = createAsyncThunk(
+  'data/removeAdminOfGroup',
+  async (info) => {
+    const response = await axios.put(`http://localhost:5000/removeAdminOfGroup`, info);
+    return response.data;
+  }
+)
+export const sendRequest = createAsyncThunk(
+  'data/sendRequest',
+  async (info) => {
+    const response = await axios.put(`http://localhost:5000/sendRequest`, info);
+    return response.data;
+  }
+)
+export const cancelRequest = createAsyncThunk(
+  'data/cancelRequest',
+  async (info) => {
+    const response = await axios.put(`http://localhost:5000/cancelRequest`, info);
+    return response.data;
+  }
+)
+export const acceptRequest = createAsyncThunk(
+  'data/acceptRequest',
+  async (info) => {
+    const response = await axios.put(`http://localhost:5000/acceptRequest`, info);
     return response.data;
   }
 )
@@ -157,6 +200,9 @@ export const dataSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setPostLoad: (state, action) => {
+      state.postLoad = action.payload;
+    },
     setGpInfo: (state, action) => {
       state.gpInfo = action.payload;
     },
@@ -167,6 +213,7 @@ export const dataSlice = createSlice({
       state.getAnnouncement = [];
       state.getHelp = [];
       state.getDiscussion = [];
+      state.isGpAdmin = false;
     }
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -301,21 +348,80 @@ export const dataSlice = createSlice({
       .addCase(getGroupInfo.fulfilled, (state, action) => {
         console.log(action.payload);
         state.gpInfo = action.payload;
+        state.isGpAdmin = Boolean(state?.gpInfo?.admin.filter(sAdmin => sAdmin.email === state?.user?.email).length);
       })
       .addCase(addUserToGroup.pending, (state, action) => {
         state.postLoad = true;
+        state.isGpAdmin = false;
       })
       .addCase(addUserToGroup.fulfilled, (state, action) => {
         state.postLoad = false;
+        state.isGpAdmin = false;
         state.gpInfo.members.push(action.payload.user)
       })
       .addCase(addUserToGroup.rejected, (state, action) => {
         state.postLoad = false;
       })
+      .addCase(makeGroupAdmin.pending, (state, action) => {
+        state.postLoad = true;
+      })
+      .addCase(makeGroupAdmin.fulfilled, (state, action) => {
+        state.postLoad = false;
+        state.gpInfo.admin.push(action.payload.user)
+      })
+      .addCase(makeGroupAdmin.rejected, (state, action) => {
+        state.postLoad = false;
+      })
+      .addCase(removeUserFromGroup.pending, (state, action) => {
+        state.postLoad = true;
+      })
+      .addCase(removeUserFromGroup.fulfilled, (state, action) => {
+        state.postLoad = false;
+        state.gpInfo.members = state.gpInfo.members.filter(sUser => sUser.email !== action.payload?.user?.email)
+      })
+      .addCase(removeUserFromGroup.rejected, (state, action) => {
+        state.postLoad = false;
+      })
+      .addCase(removeAdminOfGroup.pending, (state, action) => {
+        state.postLoad = true;
+      })
+      .addCase(removeAdminOfGroup.fulfilled, (state, action) => {
+        state.postLoad = false;
+        state.gpInfo.admin = state.gpInfo.admin.filter(sUser => sUser.email !== action.payload?.user?.email)
+      })
+      .addCase(removeAdminOfGroup.rejected, (state, action) => {
+        state.postLoad = false;
+      })
+      .addCase(sendRequest.pending, (state, action) => {
+        state.postLoad = true;
+        console.log('pending', action.payload);
+      })
+      .addCase(sendRequest.fulfilled, (state, action) => {
+        state.postLoad = false;
+        state.groups.filter(sGroup => sGroup._id === action.payload?.gpId)[0].memberRequest.push(action.payload.user)
+      })
+      .addCase(sendRequest.rejected, (state, action) => {
+        state.postLoad = false;
+      })
+      .addCase(cancelRequest.pending, (state, action) => {
+        state.postLoad = true;
+        console.log('pending', action.payload);
+      })
+      .addCase(cancelRequest.fulfilled, (state, action) => {
+        state.postLoad = false;
+        if (action.payload.deleteRequest) {
+          state.gpInfo.memberRequest = state.gpInfo.memberRequest?.filter(mem => mem.email !== action.payload.user.email)
+        } else {
+          state.groups.filter(sGroup => sGroup._id === action.payload?.gpId)[0].memberRequest = state.groups.filter(sGroup => sGroup._id === action.payload?.gpId)[0].memberRequest.filter(req => req.email !== action.payload.user.email)
+        }
+      })
+      .addCase(cancelRequest.rejected, (state, action) => {
+        state.postLoad = false;
+      })
   },
 });
 
-export const { login, logout, handleProfileToggle, resetState, setGpInfo, setLoading } = dataSlice.actions;
+export const { login, logout, handleProfileToggle, resetState, setGpInfo, setLoading, processGpAdmin, setPostLoad } = dataSlice.actions;
 export const selectData = (state) => state.data;
 
 

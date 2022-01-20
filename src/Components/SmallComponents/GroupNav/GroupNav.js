@@ -47,8 +47,17 @@ const GroupNav = () => {
                 to={`/${gpId}/manageUser`}
                 sx={{ my: 2, color: 'white', display: 'block' }}
             >
-                Manage User
+                Users
             </Button>
+            {
+                data.isGpAdmin && <Button
+                    component={NavLink}
+                    to={`/${gpId}/manageRequest`}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                    Join Request
+                </Button>
+            }
 
         </div>
     );
