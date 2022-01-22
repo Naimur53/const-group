@@ -38,7 +38,7 @@ function App() {
 
           </Route>
           <Route path='/' element={<PrivateRoute><Groups></Groups></PrivateRoute>}></Route>
-          <Route path='/group/create' element={<CreateGroup></CreateGroup>}></Route>
+          <Route path='/group/create' element={<PrivateRoute><CreateGroup></CreateGroup></PrivateRoute>}></Route>
           <Route path='/dashboard' element={<AdminRoute><Dashboard></Dashboard></AdminRoute>}></Route>
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/signup' element={<SignUp></SignUp>}></Route>

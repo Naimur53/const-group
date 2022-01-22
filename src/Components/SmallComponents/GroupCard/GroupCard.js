@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Grid } from '@mui/material';
+import { Avatar, Box, Button, CircularProgress, Grid } from '@mui/material';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,9 +11,12 @@ import Backdrop from '@mui/material/Backdrop';
 
 import { cancelRequest, resetState, selectData, sendRequest, setGpInfo, setPostLoad } from '../../../features/data/dataSlice';
 import { useForm } from 'react-hook-form';
-
+import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 const GroupCard = props => {
-    const { gpName, _id, members, memberRequest, type, allRequirement } = props.info;
+    const { gpName, _id, creator, members, gpPhoto, memberRequest, type, allRequirement } = props.info;
+    let memberReverse = [...members].reverse();
     const { register, handleSubmit, reset, unregister, setValue, watch, formState: { errors } } = useForm();
 
     const dispatch = useDispatch();
@@ -82,15 +85,32 @@ const GroupCard = props => {
         p: 4,
     }
     return (
-        <Grid item xs={4} >
-            <Box sx={{ backgroundColor: '#ffffff26' }} className='my-3'>
-                <h2>{gpName}</h2>
-                <h2>user:{members.length}</h2>
-                <div>
-                    {
-                        isMember ? <Button component={NavLink} onClick={handleCheckout} to={`/${_id}/help`}>Checkout</Button> : sendLoading ? <CircularProgress></CircularProgress> : haveRequest ? <Button onClick={handlePending} >Pending</Button> : type === 'private' ? <Button onClick={handleOpen}>Open modal</Button> : <Button onClick={handleRequest} >Request For join</Button>
-                    }
+        <Grid item sx={12} md={4} >
+            <Box sx={{ backgroundColor: '#ffffff26' }} className='my-3 rounded-lg p-3'>
+                <div className=''>
+                    <img className='w-full rounded-sm' src={gpPhoto} alt="" />
                 </div>
+                <div>
+                    <h2 className='text-xl'>{gpName} </h2>
+                    {
+                        type === 'private' ? <h4 className=' flex items-center'> <LockIcon fontSize='small'></LockIcon>Private Group.{members.length} members</h4> : <h4 className=' flex items-center'>  <LockOpenIcon fontSize='small'></LockOpenIcon>Public Group. {members.length} members</h4>
+                    }
+                    <div className='flex items-center justify-between mt-3 ml-2'>
+                        <div className='flex'>
+                            {
+                                memberReverse.slice(0, 5).map(mem => <Avatar title={mem.displayName} sx={{ width: 20, height: 20, ml: -1 }} src={mem.photoURL}></Avatar>)
+                            }
+                        </div>
+                        <div>
+                            {
+                                isMember ? <Button color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }} component={NavLink} onClick={handleCheckout} to={`/${_id}/help`}>Checkout </Button> : sendLoading ? <CircularProgress></CircularProgress> : haveRequest ? <Button onClick={handlePending} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }} >Pending</Button> : type === 'private' ? <Button onClick={handleOpen} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }}>Open modal</Button> : <Button onClick={handleRequest} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }}>Request For join</Button>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+
             </Box>
             {
                 type === 'private' && <Modal
