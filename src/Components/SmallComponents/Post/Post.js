@@ -1,5 +1,5 @@
 import { CircularProgress, IconButton, Modal, Box, Fab, FormLabel, RadioGroup, FormControlLabel, Radio, Tooltip } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -15,7 +15,7 @@ const Post = props => {
 
     const data = useSelector(selectData);
     const dispatch = useDispatch();
-    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
 
     const postInPath = pathname.split('/')[2];
 
@@ -42,6 +42,7 @@ const Post = props => {
         dispatch(postIndb(mainData))
         console.log(info);
         reset();
+        setCode(null)
     }
     // modal style 
     const style = {
@@ -50,17 +51,22 @@ const Post = props => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: "80%",
-        height: '50vh',
-        overflowX: 'scroll',
-        backdropFilter: 'blur(30px)',
-        bgcolor: 'transparent',
-        border: '2px solid #000',
-        boxShadow: 24,
+        background: '#032521f5',
         p: 4,
     };
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    console.log(watch('codeType'), code);
+    useEffect(() => {
+        if (watch('codeType')) {
+            if (!code.length) {
+                setValue('codeType', null)
+
+            }
+        }
+
+    }, [code])
     return (
         <div className='flex justify-center '>
             {
@@ -102,13 +108,13 @@ const Post = props => {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                        <Box sx={style}>
+                        <Box sx={style} className='rounded-md'>
 
                             <div className='flex justify-end'>
                                 <div >
                                     <IconButton onClick={() => {
-                                        if (watch('codeType') === null && code !== null) {
-                                            alert('Plz chose code type')
+                                        if (watch('codeType') === null && code?.length) {
+                                            alert('Please chose code type to post or remove code')
                                         }
                                         else {
                                             handleClose();
@@ -128,9 +134,9 @@ const Post = props => {
                                     name="radio-buttons-group"
                                     className='blur-3xl'
                                 >
-                                    <FormControlLabel {...register("codeType")} value="xml" control={<Radio />} label="Html" />
-                                    <FormControlLabel {...register("codeType")} value="javascript" control={<Radio />} label="JavaScript" />
-                                    <FormControlLabel {...register("codeType")} value="css" control={<Radio />} label="css" />
+                                    <FormControlLabel {...register("codeType")} defaultChecked={watch('codeType') === 'xml'} value="xml" control={<Radio />} label="Html" />
+                                    <FormControlLabel {...register("codeType")} defaultChecked={watch('codeType') === 'javascript'} value="javascript" control={<Radio />} label="JavaScript" />
+                                    <FormControlLabel {...register("codeType")} defaultChecked={watch('codeType') === 'css'} value="css" control={<Radio />} label="css" />
                                 </RadioGroup>
                             </div>
                             <Editor

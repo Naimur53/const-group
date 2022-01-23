@@ -52,8 +52,8 @@ const CommentCard = (props) => {
                                 <MoreVertIcon />
                             </IconButton>
                     }
-                    title={client.displayName}
-                    subheader={new Date(time).toLocaleString()}
+                    title={<h2 className='text-base'>{client.displayName}</h2>}
+                    subheader={<h6 className='text-xs text-gray-300'>{new Date(time).toLocaleString()}</h6>}
                 />
 
                 <CardContent>

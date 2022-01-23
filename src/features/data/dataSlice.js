@@ -62,7 +62,7 @@ export const postIndb = createAsyncThunk(
 export const getFromDB = createAsyncThunk(
   'data/getFromDB',
   async (info) => {
-    console.log('getting');
+    console.log('getting', `http://localhost:5000/userPost?gpId=${info.gpId}&postIn=${info.postIn}`);
     const response = await axios.get(`http://localhost:5000/userPost?gpId=${info.gpId}&postIn=${info.postIn}`)
     return response.data
   }
@@ -182,6 +182,14 @@ export const acceptRequest = createAsyncThunk(
   'data/acceptRequest',
   async (info) => {
     const response = await axios.put(`http://localhost:5000/acceptRequest`, info);
+    return response.data;
+  }
+)
+export const deleteGroup = createAsyncThunk(
+  'data/deleteGroup',
+  async (info) => {
+    console.log(info, 'd');
+    const response = await axios.delete(`http://localhost:5000/deleteGroup/${info.gpId}`);
     return response.data;
   }
 )
@@ -417,6 +425,10 @@ export const dataSlice = createSlice({
       })
       .addCase(cancelRequest.rejected, (state, action) => {
         state.postLoad = false;
+      })
+      .addCase(deleteGroup.fulfilled, (state, action) => {
+        state.groups = state.groups.filter(gp => gp._id !== action.payload._id);
+        state.gpInfo = {};
       })
   },
 });

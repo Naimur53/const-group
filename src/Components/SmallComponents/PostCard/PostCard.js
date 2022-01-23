@@ -89,25 +89,16 @@ const PostCard = props => {
                 <MoreVertIcon />
               </IconButton>
           }
-          title={client.displayName}
-          subheader={new Date(time).toLocaleString()}
+          title={<h2 className='text-base'>{client.displayName}</h2>}
+          subheader={<h6 className='text-xs text-gray-300'>{new Date(time).toLocaleString()}</h6>}
         />
 
         <CardContent>
-          <Typography variant="body2"  >
+          <h2 className='text-xl'>
             {postInfo}
-          </Typography>
+          </h2>
         </CardContent>
         <Grid container>
-          {
-            code && <Grid item xs={12} md={pic ? 6 : 12}> <Editor
-              language={codeType}
-              readOnly
-              value={value}
-              onChange={setValue}
-            ></Editor>
-            </Grid>
-          }
           {
             pic && <Grid item xs={12} md={code ? 6 : 12}>
               <CardMedia
@@ -119,6 +110,16 @@ const PostCard = props => {
 
             </Grid>
           }
+          {
+            code && <Grid item xs={12} md={pic ? 6 : 12}> <Editor
+              language={codeType}
+              readOnly
+              value={value}
+              onChange={setValue}
+            ></Editor>
+            </Grid>
+          }
+
 
 
         </Grid>

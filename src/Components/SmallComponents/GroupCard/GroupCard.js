@@ -103,7 +103,7 @@ const GroupCard = props => {
                         </div>
                         <div>
                             {
-                                isMember ? <Button color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }} component={NavLink} onClick={handleCheckout} to={`/${_id}/help`}>Checkout </Button> : sendLoading ? <CircularProgress></CircularProgress> : haveRequest ? <Button onClick={handlePending} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }} >Pending</Button> : type === 'private' ? <Button onClick={handleOpen} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }}>Open modal</Button> : <Button onClick={handleRequest} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }}>Request For join</Button>
+                                isMember ? <Button color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }} component={NavLink} onClick={handleCheckout} to={`/${_id}/help`}>Checkout </Button> : sendLoading ? <CircularProgress></CircularProgress> : haveRequest ? <Button onClick={handlePending} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }} >Pending</Button> : type === 'private' ? <Button onClick={handleOpen} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }}>Request for join</Button> : <Button onClick={handleRequest} color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 1 }}>Request For join</Button>
                             }
                         </div>
                     </div>

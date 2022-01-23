@@ -18,6 +18,7 @@ const Help = () => {
     useEffect(() => {
         const gpId = pathname?.split('/')[1]
         const postIn = pathname?.split('/')[2]
+        console.log({ gpId, postIn });
         dispatch(getFromDB({ gpId, postIn }));
     }, [data.postLoad, pathname])
     console.log(data.getLoad);
