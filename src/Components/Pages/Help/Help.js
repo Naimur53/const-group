@@ -7,29 +7,38 @@ import Post from '../../SmallComponents/Post/Post';
 import PostCard from '../../SmallComponents/PostCard/PostCard';
 import GroupNav from '../../SmallComponents/GroupNav/GroupNav';
 import { useLocation } from 'react-router-dom';
+import { useRef } from "react";
 
 const Help = () => {
-
+    const wrap = useRef()
     const dispatch = useDispatch();
     const data = useSelector(selectData);
-    console.log(data.getFromDB);
     const { pathname } = useLocation()
+    const [skip, setSkip] = useState(0)
 
     useEffect(() => {
         const gpId = pathname?.split('/')[1]
         const postIn = pathname?.split('/')[2]
-        console.log({ gpId, postIn });
-        dispatch(getFromDB({ gpId, postIn }));
-    }, [data.postLoad, pathname])
-    console.log(data.getLoad);
-    // if (data.getLoad) {
-    //     return 
-    // }
+        if (data.getHelp.length) {
+            dispatch(getFromDB({ gpId, postIn, skip: data.getHelp.length }));
+        } else {
+            dispatch(getFromDB({ gpId, postIn, skip }));
+        }
+    }, [pathname, dispatch, skip,])
+    const loadMore = e => {
+        let scrolling = e.target.scrollTop + 300;
+        let height = wrap.current?.clientHeight;
+        let height2 = height / 2;
+        if (scrolling >= height2 && skip !== data.getHelp.length) {
+            setSkip(data.getHelp.length);
+            console.log('loading more');
+        }
+    }
     return (
-        <div className='h-screen px-2  pb-36 overflow-hidden overflow-y-scroll'>
+        <div onScroll={loadMore} className='h-screen  pb-36 overflow-hidden overflow-y-scroll'>
             <GroupNav></GroupNav>
             <Post></Post>
-            <Grid container spacing={2}>
+            <Grid ref={wrap} container spacing={2}>
 
                 {
                     data?.getHelp?.map(sData => <PostCard key={sData._id} info={sData} data={data}  ></PostCard>)

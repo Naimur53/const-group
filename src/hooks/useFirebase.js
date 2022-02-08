@@ -1,10 +1,8 @@
 import { GoogleAuthProvider, signInWithPopup, getAuth, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useEffect } from 'react';
-import { initializeAppAuthentication } from "../Components/firebase/firebase.init";
 
 import { useDispatch } from 'react-redux'
 import { isAdmin, login, logout, putUserToDb, saveUserToDb, setLoading } from "../features/data/dataSlice";
-initializeAppAuthentication();
 
 const useFirebase = () => {
     // const [loading, setLoading] = useState(true);
@@ -13,7 +11,7 @@ const useFirebase = () => {
     const dispatch = useDispatch();
 
     // const saveUser = (user, method) => {
-    //     fetch('http://localhost:5000/users', {
+    //     fetch('https://warm-dusk-65209.herokuapp.com/users', {
     //         method: method,
     //         headers: {
     //             'content-type': 'application/json'
@@ -21,7 +19,7 @@ const useFirebase = () => {
     //         body: JSON.stringify(user)
     //     })
     //         .then(res => res.json())
-    //         .then(res => console.log(res))
+    //         .then(res => 
 
     // }
 
@@ -40,7 +38,6 @@ const useFirebase = () => {
                 navigate(location.state?.from.pathname || '/');
             })
             .catch(error => {
-                console.log(error.message);
             })
     };
 
@@ -72,20 +69,18 @@ const useFirebase = () => {
                 navigate(location.state?.from.pathname || '/')
                 // ...
             }).catch(error => {
-                console.log(error.message);
+
             })
     };
     const logInWithEmail = info => {
         const { email, password } = info;
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
+                // Signed in  
                 // ...
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                console.log(errorMessage);
             });
     }
 
@@ -101,14 +96,6 @@ const useFirebase = () => {
                     photoURL: user.photoURL,
                     uid: user.uid
                 }))
-                console.log({
-                    displayName: user.displayName,
-                    email: user.email,
-                    createdAt: user.metadata.createdAt,
-                    photoURL: user.photoURL,
-                    uid: user.uid
-                });
-                console.log('find the user and now');
                 dispatch(isAdmin({ email: user.email }))
             }
             else {
@@ -123,8 +110,7 @@ const useFirebase = () => {
             dispatch(logout())
             // Sign-out successful.
         }).catch((error) => {
-            // An error happened.
-            console.log(error);
+            // An error happened. 
         });
     }
 

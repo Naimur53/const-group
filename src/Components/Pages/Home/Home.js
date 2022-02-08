@@ -1,10 +1,8 @@
 import { Container, Grid } from '@mui/material';
 import React from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router';
+import { Outlet, } from 'react-router';
 import Profile from '../Profile/Profile';
 const Home = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
     return (
         <Container maxWidth='lg'>
             <Grid container spacing={2}>

@@ -5,10 +5,9 @@ import { useDispatch } from 'react-redux';
 import { userAdmin } from '../../../features/data/dataSlice';
 
 const Dashboard = () => {
-    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, } = useForm();
     const dispatch = useDispatch();
     const onSubmit = info => {
-        console.log(info);
         dispatch(userAdmin(info));
         alert(info.email, 'is now admin');
         reset();

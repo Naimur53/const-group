@@ -35,7 +35,7 @@ const RemoveUser = () => {
 
     //     }
     // }
-    console.log(users);
+
 
     return (
         <div>

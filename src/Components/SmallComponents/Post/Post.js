@@ -40,7 +40,7 @@ const Post = props => {
             }
         }
         dispatch(postIndb(mainData))
-        console.log(info);
+
         reset();
         setCode(null)
     }
@@ -57,7 +57,7 @@ const Post = props => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    console.log(watch('codeType'), code);
+
     useEffect(() => {
         if (watch('codeType')) {
             if (!code.length) {

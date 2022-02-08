@@ -11,7 +11,6 @@ import Help from './Components/Pages/Help/Help';
 import Announcement from './Components/Pages/Announcement/Announcement';
 import ShowOff from './Components/Pages/ShowOff/ShowOff';
 import Discussion from './Components/Pages/Discussion/Discussion';
-import Personal from './Components/Pages/Personal/Personal';
 import Dashboard from './Components/Pages/Dashboard/Dashboard';
 import AdminRoute from './Components/Pages/AdminRoute/AdminRoute';
 import Groups from './Components/Pages/Groups/Groups';
@@ -20,7 +19,6 @@ import GroupRoute from './Components/Pages/GroupRoute/GroupRoute';
 import ManageGroupUser from './Components/Pages/ManageGroupUser/ManageGroupUser';
 import ManageRequest from './Components/Pages/ManageRequest/ManageRequest';
 function App() {
-  const { handleSignOut } = useFirebase();
 
   return (
     <div className="App">

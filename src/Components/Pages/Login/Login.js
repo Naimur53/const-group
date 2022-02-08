@@ -10,7 +10,7 @@ const Login = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const data = useSelector(selectData);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     if (data?.user?.email) {
         navigate('/');
     }

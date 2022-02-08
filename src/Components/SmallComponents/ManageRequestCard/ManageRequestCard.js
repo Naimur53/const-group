@@ -8,17 +8,13 @@ const ManageRequestCard = props => {
     const [question, setQuestion] = useState([]);
     const [ans, setAns] = useState([]);
     const dispatch = useDispatch();
-    const { gpInfo, user } = useSelector(selectData);
+    const { gpInfo } = useSelector(selectData);
     const { type } = gpInfo;
     const handleAccept = () => {
-        console.log('accept');
-        console.log({ gpId: gpInfo._id, user });
         dispatch(acceptRequest({ gpId: gpInfo._id, user: props.info }));
         dispatch(cancelRequest({ gpId: gpInfo._id, user: props.info, deleteRequest: true }))
     }
     const handleDelete = () => {
-        console.log('delete');
-        console.log({ gpId: gpInfo._id, user: props.info, deleteRequest: true });
         dispatch(cancelRequest({ gpId: gpInfo._id, user: props.info, deleteRequest: true }))
     }
     useEffect(() => {
@@ -27,7 +23,6 @@ const ManageRequestCard = props => {
             setAns(Object.values(reqAns))
         }
     }, []);
-    console.log(ans, question);
     return (
         <Grid item xs={6}>
             <div style={{ backgroundColor: '#ffffff26' }} className='p-4 rounded-xl' >

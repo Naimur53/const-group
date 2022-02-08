@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid } from '@mui/material';
+import { Box, Container, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -11,7 +11,7 @@ const Groups = () => {
     useEffect(() => {
         dispatch(allGroup());
         dispatch(setGpInfo({}));
-    }, [])
+    }, [dispatch])
     return (
         <div className='mt-32'>
             <Container>

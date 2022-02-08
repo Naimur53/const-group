@@ -1,6 +1,5 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { selectData } from '../../../features/data/dataSlice';
 import GroupNav from '../../SmallComponents/GroupNav/GroupNav';
@@ -8,9 +7,7 @@ import ManageRequestCard from '../../SmallComponents/ManageRequestCard/ManageReq
 
 const ManageRequest = () => {
     const data = useSelector(selectData);
-    const dispatch = useDispatch();
     const requests = data?.gpInfo?.memberRequest
-    console.log(requests);
     return (
         <div className='mt-32'>
             <GroupNav></GroupNav>

@@ -30,14 +30,12 @@ const RemoveUserCard = props => {
         }));
     }
     const handleRemove = () => {
-        console.log(displayName);
         dispatch(removeUserFromGroup({
             gpId: data.gpInfo._id,
             user: props.info
         }));
     }
     const handleRemoveAdmin = () => {
-        console.log(displayName);
         dispatch(removeAdminOfGroup({
             gpId: data.gpInfo._id,
             user: props.info
@@ -49,8 +47,6 @@ const RemoveUserCard = props => {
 
         const isCreator = data.gpInfo?.creator?.email === data.user?.email;
 
-        const clientAdmin = Boolean(props.admin);
-
         if (isCreator) {
             setIsGroupAdmin("creator");
         }
@@ -61,7 +57,6 @@ const RemoveUserCard = props => {
             setIsGroupAdmin('user');
         }
     }, [])
-    console.log(isGroupAdmin);
     return (
         <div className='flex py-4 justify-between items-center'>
             <div className='flex items-center'>

@@ -8,15 +8,13 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button, Grid, Menu } from '@mui/material';
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { deleteComment, deletePost, updateLove } from '../../../features/data/dataSlice';
+import { deletePost, updateLove } from '../../../features/data/dataSlice';
 import Editor from '../Editor/Editor';
 import CommentWrapper from '../CommentWrapper/CommentWrapper';
-
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -32,7 +30,7 @@ const PostCard = props => {
   const [love, setLove] = useState(false);
   const [handleLoves, setHandleLoves] = useState(0);
   const dispatch = useDispatch();
-  const { postInfo, postId, loves, time, client, pic, _id, code, codeType, comments, postIn } = props.info;
+  const { postInfo, loves, time, client, pic, _id, code, codeType, comments, postIn } = props.info;
   const [value, setValue] = useState(null)
   const data = props.data;
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -73,7 +71,6 @@ const PostCard = props => {
     dispatch(deletePost({ _id, postIn: postIn }));
 
   }
-  console.log(props.info);
   return (
     <Grid ref={componentWrapper} item xs={12}>
       <Card sx={{ backgroundColor: ' #ffffff26' }}>
@@ -109,6 +106,7 @@ const PostCard = props => {
               />
 
             </Grid>
+
           }
           {
             code && <Grid item xs={12} md={pic ? 6 : 12}> <Editor

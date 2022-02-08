@@ -1,6 +1,5 @@
 import { Button, Container, Grid } from '@mui/material';
 import axios from 'axios';
-import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,20 +8,18 @@ const AddMember = () => {
     const [memberData, setMemberData] = useState({});
     const [isMember, setIsMember] = useState({});
     const [isGroupAdmin, setIsGroupAdmin] = useState(false);
-    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, } = useForm();
     const dispatch = useDispatch();
     const data = useSelector(selectData);
     const [clicked, setClicked] = useState(false);
     const onSubmit = info => {
         if (info.email !== memberData?.email) {
-            console.log(info);
-            axios.get(`http://localhost:5000/userInfo/${info.email}`)
+            axios.get(`https://warm-dusk-65209.herokuapp.com/userInfo/${info.email}`)
                 .then(res => setMemberData(res.data))
             setClicked(false);
         }
 
     }
-    console.log(memberData);
     const handleMakeAdmin = () => {
         dispatch(makeGroupAdmin({
             gpId: data.gpInfo._id,
@@ -48,7 +45,6 @@ const AddMember = () => {
             user: memberData,
             gpId: data.gpInfo._id
         }))
-        console.log('ho click e');
         setClicked(true);
     };
 
@@ -70,7 +66,6 @@ const AddMember = () => {
             setIsGroupAdmin('user');
         }
     }, [memberData, data.gpInfo])
-    console.log(isGroupAdmin);
     return (
         <div className='mt-32'>
 

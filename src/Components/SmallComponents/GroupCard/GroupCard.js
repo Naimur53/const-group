@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 
@@ -13,11 +12,10 @@ import { cancelRequest, resetState, selectData, sendRequest, setGpInfo, setPostL
 import { useForm } from 'react-hook-form';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 const GroupCard = props => {
-    const { gpName, _id, creator, members, gpPhoto, memberRequest, type, allRequirement } = props.info;
+    const { gpName, _id, members, gpPhoto, memberRequest, type, allRequirement } = props.info;
     let memberReverse = [...members].reverse();
-    const { register, handleSubmit, reset, unregister, setValue, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, } = useForm();
 
     const dispatch = useDispatch();
     const data = useSelector(selectData);
@@ -50,7 +48,6 @@ const GroupCard = props => {
     };
     // handle private group requirement ans 
     const onSubmit = info => {
-        console.log('inof', info);
         setSendLoading(true);
         dispatch(setPostLoad(true))
         dispatch(sendRequest({
@@ -63,8 +60,6 @@ const GroupCard = props => {
     }, [data.groups]);
     const isMember = members.filter(user => user.email === data.user.email).length;
     const haveRequest = Boolean(memberRequest.filter(req => req?.email === data.user?.email).length);
-    console.log(haveRequest);
-    console.log(allRequirement);
 
     useEffect(() => {
         if (haveRequest) {
@@ -85,7 +80,7 @@ const GroupCard = props => {
         p: 4,
     }
     return (
-        <Grid item sx={12} md={4} >
+        <Grid item xs={12} md={4} >
             <Box sx={{ backgroundColor: '#ffffff26' }} className='my-3 rounded-lg p-3'>
                 <div className=''>
                     <img className='w-full rounded-sm' src={gpPhoto} alt="" />
@@ -98,7 +93,7 @@ const GroupCard = props => {
                     <div className='flex items-center justify-between mt-3 ml-2'>
                         <div className='flex'>
                             {
-                                memberReverse.slice(0, 5).map(mem => <Avatar title={mem.displayName} sx={{ width: 20, height: 20, ml: -1 }} src={mem.photoURL}></Avatar>)
+                                memberReverse.slice(0, 5).map(mem => <Avatar key={mem.email} title={mem.displayName} sx={{ width: 20, height: 20, ml: -1 }} src={mem.photoURL}></Avatar>)
                             }
                         </div>
                         <div>

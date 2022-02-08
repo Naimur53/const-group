@@ -8,7 +8,7 @@ const AdminRoute = ({ children }) => {
 
     const data = useSelector(selectData);
     let location = useLocation();
-    console.log(data.admin);
+
     if (data.loading) {
         return <div className='flex justify-center items-center h-screen'>
             <CircularProgress />

@@ -34,8 +34,7 @@ const CommentCard = (props) => {
     }
     // user and clint info 
     const data = props.data;
-    const { PostInfo, postId, loves, time, client, pic, _id, code, codeType, comments, postIn } = props.info;
-    console.log(props.info);
+    const { PostInfo, time, client, pic, code, codeType, } = props.info;
 
     return (
         <Grid ref={componentWrapper} item xs={12}>

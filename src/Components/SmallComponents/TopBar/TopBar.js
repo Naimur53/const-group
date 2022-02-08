@@ -18,8 +18,6 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import { useLocation } from 'react-router-dom'
-import GroupNav from '../GroupNav/GroupNav';
 const TopBar = () => {
     const data = useSelector(selectData);
     const dispatch = useDispatch();
@@ -35,8 +33,6 @@ const TopBar = () => {
         setAnchorElAdmin(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-    };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -56,7 +52,7 @@ const TopBar = () => {
                                 <IconButton onClick={() => {
                                     dispatch(handleProfileToggle());
                                 }} sx={{ p: 0 }}>
-                                    <Avatar sx={{ width: 40, height: 40 }} alt="Remy Sharp" src={data?.user?.photoURL} />
+                                    <Avatar sx={{ width: 40, height: 40 }} alt="user img" src={data?.user?.photoURL} />
                                 </IconButton>
                             </Tooltip> : <div>
                                 <Button to='/login' color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mr: 1 }} component={NavLink}>LogIn</Button>
@@ -66,7 +62,7 @@ const TopBar = () => {
                     </div>
                 </Toolbar>
                 {
-                    data.gpInfo._id && <Toolbar disableGutters>
+                    <Toolbar disableGutters>
                         {/* for bigger device */}
                         <Typography
                             variant="h6"

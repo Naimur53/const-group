@@ -1,8 +1,8 @@
-import { Avatar, Button, CircularProgress, Container, Grid } from '@mui/material';
+import { Button, CircularProgress, Container, Grid } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createGroup, selectData } from '../../../features/data/dataSlice';
@@ -18,7 +18,7 @@ const CreateGroup = () => {
     const [requirements, setRequirements] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false);
     const [imgLoading, setImgLoading] = useState(false);
-    const { register, handleSubmit, reset, unregister, setValue, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, unregister, setValue, watch, } = useForm();
     const onSubmit = gpData => {
         gpData.members = [data?.user];
         gpData.admin = [data?.user];
@@ -30,14 +30,13 @@ const CreateGroup = () => {
         }
         let allRequirement = [];
         for (const i of requirements) {
-            console.log(gpData[`requirement${i}`]);
             allRequirement = [...allRequirement, gpData[`requirement${i}`]];
             delete gpData[`requirement${i}`];
         }
         gpData["allRequirement"] = allRequirement;
-        console.log(gpData);
         dispatch(createGroup(gpData))
         navigate('/');
+        reset();
     }
     const handleType = e => {
         setValue('type', e.target.value);
@@ -71,10 +70,8 @@ const CreateGroup = () => {
     }
 
     useEffect(() => {
-        console.log("all requer", requirements);
         const file = watch('pic');
         if (file.length) {
-            console.log(file);
             let body = new FormData()
             body.set('key', process.env.REACT_APP_IMAGEBB_API)
             body.append('image', file[0])
@@ -84,17 +81,14 @@ const CreateGroup = () => {
                 url: 'https://api.imgbb.com/1/upload',
                 data: body
             }).then(res => {
-                console.log(res.data?.data?.url)
                 setValue('gpPhoto', res.data?.data?.url)
             }).finally(() => setImgLoading(false))
-            console.log(file);
         }
         else {
             setValue('gpPhoto', 'https://i.ibb.co/7zshrP5/pngtree-cartoon-education-training-cram-school-image-9149.jpg')
         }
 
     }, [watch('pic')]);
-    console.log(watch('gpPhoto'));
     return (
         <div className='mt-20'>
             <Container maxWidth="xl">
@@ -139,7 +133,7 @@ const CreateGroup = () => {
                                     imgLoading ? <div className='h-60 flex justify-center items-center'><CircularProgress></CircularProgress> </div> : <img className='rounded-xl w-full' src={watch('gpPhoto')} alt="Group banner" />
                                 }
                                 <div className='absolute right-0 bottom-0'>
-                                    <label htmlFor="gpImg" className='border border-green-600 md:mb-4 mb-2 mr-2 md:mr-10 px-3 py-2 bg-green-900 rounded-md flex items-center'><BrushIcon></BrushIcon>Edit</label>
+                                    <label htmlFor="gpImg" className='border border-green-600 md:mb-4 mb-2 mr-2 md:mr-10 px-3 py-2 bg-gray-900  rounded-md flex items-center'><BrushIcon  ></BrushIcon>Edit</label>
                                 </div>
                             </div>
                             <div className='px-5 mt-5'>
