@@ -18,12 +18,10 @@ const Discussion = () => {
     useEffect(() => {
         const gpId = pathname?.split('/')[1]
         const postIn = pathname?.split('/')[2]
-        console.log(skip);
         if (data.getDiscussion.length) {
             dispatch(getFromDB({ gpId, postIn, skip: data.getDiscussion.length }));
         } else {
             dispatch(getFromDB({ gpId, postIn, skip }));
-
         }
     }, [pathname, dispatch, skip])
     const loadMore = e => {
@@ -36,7 +34,7 @@ const Discussion = () => {
         }
     }
     return (
-        <div onScroll={loadMore} className='h-screen px-2  pb-36 overflow-hidden overflow-y-scroll'>
+        <div onScroll={loadMore} className='h-screen   pb-36 overflow-hidden overflow-y-scroll'>
             <GroupNav></GroupNav>
             <Post></Post>
             <Grid ref={wrap} container spacing={2}>
