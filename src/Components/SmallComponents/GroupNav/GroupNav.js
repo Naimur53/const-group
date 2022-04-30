@@ -21,7 +21,7 @@ const GroupNav = () => {
         }
     }
     return (
-        <div className='relative mt-36 md:mt-20 '>
+        <div className='relative  '>
             <div style={{ zIndex: '1200' }} className='md:flex hidden  fixed top-0 '>
                 <Button
                     component={NavLink}

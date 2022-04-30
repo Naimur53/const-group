@@ -1,4 +1,5 @@
 import React from 'react';
+import ASO from 'aos'
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Components/Pages/Login/Login'
@@ -18,6 +19,8 @@ import CreateGroup from './Components/Pages/CreateGroup/CreateGroup';
 import GroupRoute from './Components/Pages/GroupRoute/GroupRoute';
 import ManageGroupUser from './Components/Pages/ManageGroupUser/ManageGroupUser';
 import ManageRequest from './Components/Pages/ManageRequest/ManageRequest';
+import 'aos/dist/aos.css';
+ASO.init();
 function App() {
 
   return (
@@ -25,6 +28,8 @@ function App() {
       <BrowserRouter>
         <TopBar></TopBar>
         <Routes>
+          <Route path="*" element={<div> 404</div>}></Route>
+          <Route path='/' element={<PrivateRoute><Groups></Groups></PrivateRoute>}></Route>
           <Route path='/:gpId' element={<PrivateRoute><Home></Home></PrivateRoute>}>
             <Route path='/:gpId' element={<PrivateRoute><GroupRoute><Help></Help></GroupRoute></PrivateRoute>}> </Route>
             <Route path='/:gpId/help' element={<PrivateRoute><GroupRoute><Help></Help></GroupRoute></PrivateRoute>}></Route>
@@ -35,7 +40,7 @@ function App() {
             <Route path='/:gpId/manageRequest' element={<PrivateRoute><GroupRoute><ManageRequest></ManageRequest></GroupRoute></PrivateRoute>}> </Route>
 
           </Route>
-          <Route path='/' element={<PrivateRoute><Groups></Groups></PrivateRoute>}></Route>
+
           <Route path='/group/create' element={<PrivateRoute><CreateGroup></CreateGroup></PrivateRoute>}></Route>
           <Route path='/dashboard' element={<AdminRoute><Dashboard></Dashboard></AdminRoute>}></Route>
           <Route path='/login' element={<Login></Login>}></Route>

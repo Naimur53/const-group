@@ -17,7 +17,7 @@ const Profile = () => {
         })
     }
     return (
-        <div className='mt-20'>
+        <div className='mt-5'>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <div className="  justify-center">

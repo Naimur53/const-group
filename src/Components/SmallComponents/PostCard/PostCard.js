@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { deletePost, updateLove } from '../../../features/data/dataSlice';
 import Editor from '../Editor/Editor';
 import CommentWrapper from '../CommentWrapper/CommentWrapper';
+import processingNotification from '../../../functionalCode/notification';
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -33,6 +34,7 @@ const PostCard = props => {
   const { postInfo, loves, time, client, pic, _id, code, codeType, comments, postIn } = props.info;
   const [value, setValue] = useState(null)
   const data = props.data;
+  const { i, array } = props;
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const componentWrapper = useRef(null)
   const handleOpenUserMenu = (event) => {
@@ -41,7 +43,7 @@ const PostCard = props => {
     setAnchorElUser(null);
   };
   const [expanded, setExpanded] = React.useState(false);
-
+  console.log(i, array);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -57,14 +59,14 @@ const PostCard = props => {
       setLove(false)
       setHandleLoves(handleLoves - 1)
       dispatch(updateLove({ type: "delete", email: data.user.email, _id }))
+      processingNotification(data.user, props.info, 'love', dispatch, 'cancel')
     }
     else {
       setLove(true)
       setHandleLoves(handleLoves + 1)
       dispatch(updateLove({ type: "put", email: data.user.email, _id }))
-
+      processingNotification(data.user, props.info, 'love', dispatch, 'post')
     }
-
   }
   const handleDelete = id => {
     componentWrapper.current.style.display = 'none'

@@ -21,6 +21,7 @@ const initialState = {
   canAccess: false,
   gpInfo: {},
   isGpAdmin: false,
+  notification: [],
 };
 initializeAppAuthentication();
 export const saveUserToDb = createAsyncThunk(
@@ -190,6 +191,29 @@ export const deleteGroup = createAsyncThunk(
   'data/deleteGroup',
   async (info) => {
     const response = await axios.delete(`https://warm-dusk-65209.herokuapp.com/deleteGroup/${info.gpId}`);
+    return response.data;
+  }
+)
+export const sendNotification = createAsyncThunk(
+  'data/sendNotification',
+  async (info) => {
+    console.log(info);
+    const response = await axios.post(`http://localhost:5000/notification`, info);
+    return response.data;
+  }
+)
+export const cancelNotification = createAsyncThunk(
+  'data/cancelNotification',
+  async (info) => {
+    console.log(info);
+    const response = await axios.delete(`http://localhost:5000/notification`, { data: info });
+    return response.data;
+  }
+)
+export const getNotification = createAsyncThunk(
+  'data/getNotification',
+  async (info) => {
+    const response = await axios(`http://localhost:5000/notification/${info.email}`);
     return response.data;
   }
 )
@@ -434,6 +458,9 @@ export const dataSlice = createSlice({
       .addCase(deleteGroup.fulfilled, (state, action) => {
         state.groups = state.groups.filter(gp => gp._id !== action.payload._id);
         state.gpInfo = {};
+      })
+      .addCase(getNotification.fulfilled, (state, action) => {
+        state.notification = action.payload;
       })
   },
 });

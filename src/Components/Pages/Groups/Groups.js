@@ -13,7 +13,7 @@ const Groups = () => {
         dispatch(setGpInfo({}));
     }, [dispatch])
     return (
-        <div className='mt-32'>
+        <div className=' '>
             <Container>
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={4} >

@@ -35,13 +35,13 @@ const Help = () => {
         }
     }
     return (
-        <div onScroll={loadMore} className='h-screen  pb-36 overflow-hidden overflow-y-scroll'>
+        <div onScroll={loadMore}  >
             <GroupNav></GroupNav>
             <Post></Post>
             <Grid ref={wrap} container spacing={2}>
 
                 {
-                    data?.getHelp?.map(sData => <PostCard key={sData._id} info={sData} data={data}  ></PostCard>)
+                    data?.getHelp?.map((sData, i, array) => <PostCard key={sData._id} info={sData} setSkip={setSkip} data={data} i={i} array={array}></PostCard>)
                 }
                 <Grid item xs={12}>
                     {

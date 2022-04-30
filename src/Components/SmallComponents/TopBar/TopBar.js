@@ -18,6 +18,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 const TopBar = () => {
     const data = useSelector(selectData);
     const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const TopBar = () => {
     };
 
     return (
-        <AppBar sx={{ backgroundColor: '#082429' }} position="fixed">
+        <AppBar sx={{ backgroundColor: '#082429' }} position="sticky">
             <Container maxWidth="xl">
                 <Toolbar className='justify-between' sx={{ display: { xs: 'flex', md: "none" } }} disableGutters>
                     <div><NavLink to='/'>Const Group</NavLink></div>
@@ -127,11 +128,17 @@ const TopBar = () => {
 
                         <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'block' } }}>
                             {
-                                data?.user?.email ? <Tooltip title="Open settings">
-                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                        <Avatar sx={{ width: 40, height: 40 }} alt="Remy Sharp" src={data?.user?.photoURL} />
+                                data?.user?.email ? <>
+                                    <IconButton sx={{ mr: 3 }}>
+                                        <NotificationsIcon></NotificationsIcon>
                                     </IconButton>
-                                </Tooltip> : <div>
+                                    <Tooltip title="Open settings">
+
+                                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                            <Avatar sx={{ width: 40, height: 40 }} alt={data.user?.displayName} src={data?.user?.photoURL} />
+                                        </IconButton>
+                                    </Tooltip>
+                                </> : <div>
                                     <Button to='/login' color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mr: 1 }} component={NavLink}>LogIn</Button>
                                     <Button to='/signup' color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)' }} component={NavLink}>signUp</Button>
                                 </div>

@@ -34,13 +34,13 @@ const Discussion = () => {
         }
     }
     return (
-        <div onScroll={loadMore} className='h-screen   pb-36 overflow-hidden overflow-y-scroll'>
+        <div onScroll={loadMore} >
             <GroupNav></GroupNav>
             <Post></Post>
             <Grid ref={wrap} container spacing={2}>
 
                 {
-                    data?.getDiscussion?.map(sData => <PostCard key={sData._id} info={sData} data={data}  ></PostCard>)
+                    data?.getDiscussion?.map((sData, i, array) => <PostCard key={sData._id} info={sData} data={data} i={i} array={array} setSkip={setSkip}></PostCard>)
                 }
                 <Grid item xs={12}>
                     {

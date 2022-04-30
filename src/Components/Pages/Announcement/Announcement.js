@@ -32,7 +32,7 @@ const Announcement = () => {
         }
     }
     return (
-        <div onScroll={loadMore} className='h-screen px-2 pb-36 overflow-hidden overflow-y-scroll'>
+        <div onScroll={loadMore} >
             <GroupNav></GroupNav>
             {
                 data.admin && <Post></Post>
@@ -40,19 +40,19 @@ const Announcement = () => {
             <Grid ref={wrap} sx={{ mt: data.admin ? 3 : 10 }} container spacing={2}>
 
                 {
-                    data?.getAnnouncement?.map(sData => <PostCard key={sData._id} info={sData} data={data}  ></PostCard>)
+                    data?.getAnnouncement?.map((sData, i, array) => <PostCard key={sData._id} info={sData} data={data} i={i} array={array} setSkip={setSkip}></PostCard>)
                 }
                 <Grid item xs={12}>
                     {
                         data.getLoad && <div className='mt-20 flex items-center justify-center'>
-                            <CircularProgress></CircularProgress>
-                        </div>
+                            <CircularProgress ></CircularProgress >
+                        </div >
 
                     }
-                </Grid>
+                </Grid >
 
-            </Grid>
-        </div>
+            </Grid >
+        </div >
     );
 };
 
