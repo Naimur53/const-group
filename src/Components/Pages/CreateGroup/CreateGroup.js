@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Container, Grid } from '@mui/material';
+import { Button, CircularProgress, Container, Grid, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
@@ -11,6 +11,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import BrushIcon from '@mui/icons-material/Brush';
 import './CreateGroup.css'
+import { Box } from '@mui/system';
 const CreateGroup = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const CreateGroup = () => {
     const [isDisabled, setIsDisabled] = useState(false);
     const [imgLoading, setImgLoading] = useState(false);
     const { register, handleSubmit, reset, unregister, setValue, watch, } = useForm();
+    //handle gp type  
     const onSubmit = gpData => {
         gpData.members = [data?.user];
         gpData.admin = [data?.user];
@@ -34,9 +36,11 @@ const CreateGroup = () => {
             delete gpData[`requirement${i}`];
         }
         gpData["allRequirement"] = allRequirement;
-        dispatch(createGroup(gpData))
-        navigate('/');
-        reset();
+
+        // dispatch(createGroup(gpData))
+        // navigate('/');
+        console.log(gpData);
+        // reset();
     }
     const handleType = e => {
         setValue('type', e.target.value);
@@ -66,7 +70,7 @@ const CreateGroup = () => {
     }, [watch(`requirement${requirements.length}`)]);
 
     const handleAddRequirement = () => {
-        setRequirements([...requirements, requirements[requirements.length - 1] + 1])
+        setRequirements([...requirements, requirements.length + 1])
     }
 
     useEffect(() => {
@@ -97,32 +101,35 @@ const CreateGroup = () => {
                         <form className='w-full' onSubmit={handleSubmit(onSubmit)} >
                             <input className="placeholder-gray-400 rounded-sm  w-full bg-transparent border-b py-2 border-red-100 px-2" type="text" placeholder='Enter Group Name' {...register("gpName", { required: true })} />
 
-                            <h2 className='text-lg mt-5 mb-2 text-green-500 font-bold'> Select Group Privacy</h2>
+                            <h2 className='text-lg mt-5 mb-2 text-gray-300 font-bold'> Select Group Privacy</h2>
                             <div className='flex items-center' >
-                                <div className="flex items-center mr-5">
-                                    <input onClick={handleType} id='public' name='type' type="radio" value='public' />
-                                    <label htmlFor="public" className='text-lg ml-1'>public </label>
-                                </div>
-
-                                <div className="flex items-center">
-                                    <input onClick={handleType} id='private' name='type' type="radio" value='private' />
-                                    <label htmlFor="private" className='text-lg ml-1'>private </label>
-                                    <br />
-                                </div>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={watch('type') ? watch('type') : 'public'}
+                                    sx={{ width: '100%', color: '#fff' }}
+                                    onChange={handleType}
+                                >
+                                    <MenuItem value={'public'}>Public</MenuItem>
+                                    <MenuItem value={'private'}>Private</MenuItem>
+                                </Select>
                             </div>
                             <input id="gpImg" accept='image/*' {...register("pic")} className='hidden' type="file" />
                             {
                                 watch('type') === 'private' && <div className='flex mt-5 flex-col'>
-                                    <h2 className='mb-2 text-lg text-green-500 font-bold'>Add Questions For Join</h2>
-                                    <Button onClick={handleAddRequirement} variant='contained' sx={{ background: '#0b3733', '&:hover': { background: 'rgba(16, 185, 129, .5)' } }} className='add-requirement' disabled={isDisabled} >Add Another  Questions</Button>
+                                    <h2 className='mb-1 text-lg text-gray-300 font-bold'>Add Questions For Join</h2>
+
                                     {
-                                        requirements.length && requirements.map(requirement => <RequirementCard register={register} key={requirement} num={requirement}></RequirementCard>)
+                                        requirements?.map(requirement => <RequirementCard watch={watch} setValue={setValue} unregister={unregister} setRequirements={setRequirements} register={register} key={requirement} num={requirement} ></RequirementCard>)
 
                                     }
+                                    <Button onClick={handleAddRequirement} variant='contained' sx={{ mt: 2, background: '#0b3733', '&:hover': { background: 'rgba(16, 185, 129, .5)' } }} className='add-requirement' disabled={isDisabled} >Add Another  Questions</Button>
 
 
                                 </div>
                             }
+                            <textarea className="placeholder-gray-400 rounded-sm  w-full bg-transparent border-b py-2 border-red-100 px-2" type="text" placeholder='Description' {...register("description", { required: true })} ></textarea>
+
                             <Button color='secondary' variant='contained' sx={{ background: 'rgb(0 255 232 / 20%)', mt: 3, width: '100%' }} type='submit'>Create</Button>
                         </form>
                     </Grid>

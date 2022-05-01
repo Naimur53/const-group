@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -10,7 +10,6 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button, Grid, Menu } from '@mui/material';
-import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { deletePost, updateLove } from '../../../features/data/dataSlice';
 import Editor from '../Editor/Editor';
@@ -29,21 +28,47 @@ const ExpandMore = styled((props) => {
 //main component
 const PostCard = props => {
   const [love, setLove] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [handleLoves, setHandleLoves] = useState(0);
   const dispatch = useDispatch();
   const { postInfo, loves, time, client, pic, _id, code, codeType, comments, postIn } = props.info;
   const [value, setValue] = useState(null)
   const data = props.data;
-  const { i, array } = props;
+  const { i, array, setSkip } = props;
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const componentWrapper = useRef(null)
+  const componentWrapper = useRef(null);
+  // observer init 
+  const options = useMemo(() => {
+    return {
+      root: null,
+      rootMargin: '60px',
+      threshold: 1
+    }
+  }, [])
+  useEffect(() => {
+    // creating observer
+    let currentTarget;
+    const observer = new IntersectionObserver(entries => {
+      const [entry] = entries;
+      setIsVisible(entry.isIntersecting)
+    }, options);
+
+    if (i + 1 === array.length) {
+      //init observer
+      currentTarget = componentWrapper.current;
+      if (currentTarget) observer.observe(currentTarget);
+    }
+
+    return () => {
+      if (currentTarget) observer.unobserve(currentTarget)
+    }
+  }, [componentWrapper, options]);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   }; const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
   const [expanded, setExpanded] = React.useState(false);
-  console.log(i, array);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -73,6 +98,11 @@ const PostCard = props => {
     dispatch(deletePost({ _id, postIn: postIn }));
 
   }
+  // call api
+  useEffect(() => {
+    if (isVisible) setSkip(array.length)
+  }, [isVisible, array.length, setSkip])
+
   return (
     <Grid ref={componentWrapper} item xs={12}>
       <Card sx={{ backgroundColor: ' #ffffff26' }}>
