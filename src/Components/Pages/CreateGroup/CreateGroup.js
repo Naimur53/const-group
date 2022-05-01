@@ -120,10 +120,10 @@ const CreateGroup = () => {
                                     <h2 className='mb-1 text-lg text-gray-300 font-bold'>Add Questions For Join</h2>
 
                                     {
-                                        requirements?.map(requirement => <RequirementCard watch={watch} setValue={setValue} unregister={unregister} setRequirements={setRequirements} register={register} key={requirement} num={requirement} ></RequirementCard>)
+                                        requirements?.map(requirement => <RequirementCard watch={watch} setValue={setValue} unregister={unregister} setRequirements={setRequirements} register={register} requirements={requirements} key={requirement} num={requirement} ></RequirementCard>)
 
                                     }
-                                    <Button onClick={handleAddRequirement} variant='contained' sx={{ mt: 2, background: '#0b3733', '&:hover': { background: 'rgba(16, 185, 129, .5)' } }} className='add-requirement' disabled={isDisabled} >Add Another  Questions</Button>
+                                    <Button onClick={handleAddRequirement} variant='contained' sx={{ mt: 2, background: '#0b3733', '&:hover': { background: 'rgba(16, 185, 129, .5)' } }} className='add-requirement' disabled={isDisabled} >Add Another Questions</Button>
 
 
                                 </div>

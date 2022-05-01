@@ -1,7 +1,7 @@
 import React from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { IconButton } from '@mui/material';
-const RequirementCard = ({ num, setValue, register, setRequirements, unregister, watch }) => {
+const RequirementCard = ({ num, setValue, register, setRequirements, unregister, watch, requirements }) => {
     // const register = props.register
     const handleClick = () => {
 
@@ -12,17 +12,19 @@ const RequirementCard = ({ num, setValue, register, setRequirements, unregister,
                 setValue(`requirement${i + 1}`, watch(`requirement${element}`))
                 unregister(`requirement${element}`, { keepDirty: false });
             });
-            const a = pre.filter(preNum => preNum !== num).map((ele, i) => ++i);
+            const newRe = pre.filter(preNum => preNum !== num).map((ele, i) => ++i);
             unregister(`requirement${num}`, { keepDirty: false });
-            console.log(`requirement${num}`, watch(`requirement${num}`), a);
 
-            return a
+            return newRe;
         })
     }
     return (
         <div className='relative'>
             <input className="  mt-3  w-full bg-transparent border-b py-2 border-red-100 px-2" type="text" placeholder='Enter your question' {...register(`requirement${num}`, { required: true })} />
-            <IconButton sx={{ position: 'absolute' }} onClick={handleClick} className='top-3 right-0'><CancelIcon style={{ fill: "red", }}></CancelIcon></IconButton>
+            {
+
+                requirements.length !== 1 && <IconButton sx={{ position: 'absolute' }} onClick={handleClick} className='top-3 right-0'><CancelIcon style={{ fill: "red", }}></CancelIcon></IconButton>
+            }
         </div>
     );
 };
