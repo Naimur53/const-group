@@ -11,7 +11,7 @@ const useFirebase = () => {
     const dispatch = useDispatch();
 
     // const saveUser = (user, method) => {
-    //     fetch('https://warm-dusk-65209.herokuapp.com/users', {
+    //     fetch('https://cosnt-group-server-production.up.railway.app/users', {
     //         method: method,
     //         headers: {
     //             'content-type': 'application/json'

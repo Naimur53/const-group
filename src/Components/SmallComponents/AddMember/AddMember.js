@@ -14,7 +14,7 @@ const AddMember = () => {
     const [clicked, setClicked] = useState(false);
     const onSubmit = info => {
         if (info.email !== memberData?.email) {
-            axios.get(`https://warm-dusk-65209.herokuapp.com/userInfo/${info.email}`)
+            axios.get(`https://cosnt-group-server-production.up.railway.app/userInfo/${info.email}`)
                 .then(res => setMemberData(res.data))
             setClicked(false);
         }

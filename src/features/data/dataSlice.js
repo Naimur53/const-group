@@ -27,14 +27,14 @@ initializeAppAuthentication();
 export const saveUserToDb = createAsyncThunk(
   'saveUserToDb/user',
   async (info) => {
-    const response = await axios.post(`https://warm-dusk-65209.herokuapp.com/user`, info);
+    const response = await axios.post(`https://cosnt-group-server-production.up.railway.app/user`, info);
     return response.data
   }
 )
 export const putUserToDb = createAsyncThunk(
   'data/putUserToDb',
   async (info) => {
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/user`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/user`, info);
     return response.data
   }
 )
@@ -42,7 +42,7 @@ export const userAdmin = createAsyncThunk(
   'userAdmin/user',
   async (info) => {
 
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/user/makeAdmin`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/user/makeAdmin`, info);
     return response.data
   }
 )
@@ -50,7 +50,7 @@ export const isAdmin = createAsyncThunk(
   'isAdmin/user',
   async (info) => {
 
-    const response = await axios.get(`https://warm-dusk-65209.herokuapp.com/user/${info.email}`);
+    const response = await axios.get(`https://cosnt-group-server-production.up.railway.app/user/${info.email}`);
     return response.data
   }
 )
@@ -58,14 +58,14 @@ export const isAdmin = createAsyncThunk(
 export const postIndb = createAsyncThunk(
   'postInfo/postIndb',
   async (info) => {
-    const response = await axios.post('https://warm-dusk-65209.herokuapp.com/userPost', info)
+    const response = await axios.post('https://cosnt-group-server-production.up.railway.app/userPost', info)
     return response.data
   }
 )
 export const getFromDB = createAsyncThunk(
   'data/getFromDB',
   async (info) => {
-    const response = await axios.get(`https://warm-dusk-65209.herokuapp.com/userPost?gpId=${info.gpId}&postIn=${info.postIn}&skip=${info.skip}`)
+    const response = await axios.get(`https://cosnt-group-server-production.up.railway.app/userPost?gpId=${info.gpId}&postIn=${info.postIn}&skip=${info.skip}`)
     return response.data
   }
 )
@@ -74,11 +74,11 @@ export const updateLove = createAsyncThunk(
   async (info) => {
 
     if (info.type === 'put') {
-      const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/userPost/love`, info)
+      const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/userPost/love`, info)
       return response.data
     }
     else {
-      const response = await axios.delete(`https://warm-dusk-65209.herokuapp.com/userPost/love`, { data: info })
+      const response = await axios.delete(`https://cosnt-group-server-production.up.railway.app/userPost/love`, { data: info })
       return response.data
     }
 
@@ -88,14 +88,14 @@ export const sendComment = createAsyncThunk(
   'getFromDB/sendComment',
   async (info) => {
 
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/userPost/comment`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/userPost/comment`, info);
     return response.data
   }
 )
 export const deletePost = createAsyncThunk(
   'deletePost/postIndb',
   async (info) => {
-    const response = await axios.delete(`https://warm-dusk-65209.herokuapp.com/userPost/${info._id}`, { data: info });
+    const response = await axios.delete(`https://cosnt-group-server-production.up.railway.app/userPost/${info._id}`, { data: info });
 
     return response.data;
   }
@@ -104,7 +104,7 @@ export const deleteComment = createAsyncThunk(
   'deleteComment/postIndb',
   async (info) => {
 
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/userPost/deleteComment`, { data: info })
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/userPost/deleteComment`, { data: info })
 
     return response.data;
   }
@@ -113,84 +113,84 @@ export const myPost = createAsyncThunk(
   'myPost/getMyPost',
   async (info) => {
 
-    const response = await axios.get(`https://warm-dusk-65209.herokuapp.com/${info.email}/${info.type}`)
+    const response = await axios.get(`https://cosnt-group-server-production.up.railway.app/${info.email}/${info.type}`)
     return { info, data: response.data };
   }
 )
 export const createGroup = createAsyncThunk(
   'data/createGroup',
   async (info) => {
-    const response = await axios.post(`https://warm-dusk-65209.herokuapp.com/createGroup`, info)
+    const response = await axios.post(`https://cosnt-group-server-production.up.railway.app/createGroup`, info)
     return response.data;
   }
 )
 export const allGroup = createAsyncThunk(
   'data/allGroup',
   async (info) => {
-    const response = await axios.get(`https://warm-dusk-65209.herokuapp.com/allGroup`, info)
+    const response = await axios.get(`https://cosnt-group-server-production.up.railway.app/allGroup`, info)
     return response.data;
   }
 )
 export const getGroupInfo = createAsyncThunk(
   'data/getGroupInfo',
   async (info) => {
-    const response = await axios.get(`https://warm-dusk-65209.herokuapp.com/group/${info._id}`)
+    const response = await axios.get(`https://cosnt-group-server-production.up.railway.app/group/${info._id}`)
     return response.data;
   }
 )
 export const addUserToGroup = createAsyncThunk(
   'data/addUserToGroup',
   async (info) => {
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/addUserToGroup`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/addUserToGroup`, info);
     return response.data;
   }
 )
 export const removeUserFromGroup = createAsyncThunk(
   'data/removeUserFromGroup',
   async (info) => {
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/removeUserFromGroup`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/removeUserFromGroup`, info);
     return response.data;
   }
 )
 export const makeGroupAdmin = createAsyncThunk(
   'data/makeGroupAdmin',
   async (info) => {
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/makeGroupAdmin`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/makeGroupAdmin`, info);
     return response.data;
   }
 )
 export const removeAdminOfGroup = createAsyncThunk(
   'data/removeAdminOfGroup',
   async (info) => {
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/removeAdminOfGroup`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/removeAdminOfGroup`, info);
     return response.data;
   }
 )
 export const sendRequest = createAsyncThunk(
   'data/sendRequest',
   async (info) => {
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/sendRequest`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/sendRequest`, info);
     return response.data;
   }
 )
 export const cancelRequest = createAsyncThunk(
   'data/cancelRequest',
   async (info) => {
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/cancelRequest`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/cancelRequest`, info);
     return response.data;
   }
 )
 export const acceptRequest = createAsyncThunk(
   'data/acceptRequest',
   async (info) => {
-    const response = await axios.put(`https://warm-dusk-65209.herokuapp.com/acceptRequest`, info);
+    const response = await axios.put(`https://cosnt-group-server-production.up.railway.app/acceptRequest`, info);
     return response.data;
   }
 )
 export const deleteGroup = createAsyncThunk(
   'data/deleteGroup',
   async (info) => {
-    const response = await axios.delete(`https://warm-dusk-65209.herokuapp.com/deleteGroup/${info.gpId}`);
+    const response = await axios.delete(`https://cosnt-group-server-production.up.railway.app/deleteGroup/${info.gpId}`);
     return response.data;
   }
 )
