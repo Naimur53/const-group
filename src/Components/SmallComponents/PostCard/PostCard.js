@@ -108,7 +108,7 @@ const PostCard = props => {
       <Card sx={{ backgroundColor: ' #ffffff26' }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ width: 40, height: 40 }} alt='client image' src={client?.photoURL} />
+            <Avatar sx={{ width: 50, height: 50 }} alt='client image' src={client?.photoURL} />
           }
           action={
             client?.email === data?.user?.email || data.admin ? <IconButton onClick={handleOpenUserMenu} aria-label="settings">

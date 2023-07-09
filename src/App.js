@@ -35,10 +35,11 @@ function App() {
             <Route path='/:gpId/help' element={<PrivateRoute><GroupRoute><Help></Help></GroupRoute></PrivateRoute>}></Route>
             <Route path='/:gpId/showoff' element={<PrivateRoute><ShowOff></ShowOff></PrivateRoute>}> </Route>
             <Route path='/:gpId/announcement' element={<PrivateRoute><Announcement></Announcement></PrivateRoute>}> </Route>
-            <Route path='/:gpId/discussion' element={<PrivateRoute><GroupRoute><Discussion></Discussion></GroupRoute></PrivateRoute>}> </Route>
+            <Route path='/:gpId/discussion' element={<PrivateRoute>
+              <GroupRoute><Discussion></Discussion></GroupRoute>
+            </PrivateRoute>}> </Route>
             <Route path='/:gpId/manageUser' element={<PrivateRoute><GroupRoute><ManageGroupUser></ManageGroupUser></GroupRoute></PrivateRoute>}> </Route>
             <Route path='/:gpId/manageRequest' element={<PrivateRoute><GroupRoute><ManageRequest></ManageRequest></GroupRoute></PrivateRoute>}> </Route>
-
           </Route>
 
           <Route path='/group/create' element={<PrivateRoute><CreateGroup></CreateGroup></PrivateRoute>}></Route>
