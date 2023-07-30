@@ -66,6 +66,9 @@ export const postIndb = createAsyncThunk("postInfo/postIndb", async (info) => {
   return response.data;
 });
 export const getFromDB = createAsyncThunk("data/getFromDB", async (info) => {
+  console.log(
+    `https://cosnt-group-server-production.up.railway.app/userPost?gpId=${info.gpId}&postIn=${info.postIn}&skip=${info.skip}`
+  );
   const response = await axios.get(
     `https://cosnt-group-server-production.up.railway.app/userPost?gpId=${info.gpId}&postIn=${info.postIn}&skip=${info.skip}`
   );
@@ -237,7 +240,7 @@ export const sendNotification = createAsyncThunk(
   async (info) => {
     console.log(info);
     const response = await axios.post(
-      `http://localhost:5000/notification`,
+      `https://cosnt-group-server-production.up.railway.app/notification`,
       info
     );
     return response.data;
@@ -247,9 +250,12 @@ export const cancelNotification = createAsyncThunk(
   "data/cancelNotification",
   async (info) => {
     console.log(info);
-    const response = await axios.delete(`http://localhost:5000/notification`, {
-      data: info,
-    });
+    const response = await axios.delete(
+      `https://cosnt-group-server-production.up.railway.app/notification`,
+      {
+        data: info,
+      }
+    );
     return response.data;
   }
 );
@@ -257,7 +263,7 @@ export const getNotification = createAsyncThunk(
   "data/getNotification",
   async (info) => {
     const response = await axios(
-      `http://localhost:5000/notification/${info.email}`
+      `https://cosnt-group-server-production.up.railway.app/notification/${info.email}`
     );
     return response.data;
   }
