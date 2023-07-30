@@ -187,9 +187,9 @@ const TopBar = () => {
             <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
               {data?.user?.email ? (
                 <>
-                  {/* <IconButton sx={{ mr: 3 }}>
+                  <IconButton sx={{ mr: 3 }}>
                     <NotificationsIcon></NotificationsIcon>
-                  </IconButton> */}
+                  </IconButton>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
